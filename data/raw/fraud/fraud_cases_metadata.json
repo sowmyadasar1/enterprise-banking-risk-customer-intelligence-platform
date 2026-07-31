@@ -1,0 +1,15 @@
+{
+  "dataset": "fraud_cases",
+  "row_count": 5000,
+  "columns": 7,
+  "schema": {
+    "case_id": "object",
+    "transaction_id": "object",
+    "customer_id": "object",
+    "report_date": "datetime64[ns]",
+    "fraud_type": "object",
+    "amount_involved": "float64",
+    "status": "object"
+  },
+  "generated_at": "2026-07-17T22:10:18.987429+00:00"
+}

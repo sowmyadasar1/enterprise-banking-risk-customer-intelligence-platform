@@ -1,0 +1,14 @@
+{
+  "dataset": "campaign_responses",
+  "row_count": 20000,
+  "columns": 6,
+  "schema": {
+    "response_id": "object",
+    "campaign_id": "object",
+    "customer_id": "object",
+    "response_type": "object",
+    "response_date": "datetime64[ns]",
+    "channel": "object"
+  },
+  "generated_at": "2026-07-17T22:10:19.469224+00:00"
+}

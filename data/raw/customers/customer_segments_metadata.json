@@ -1,0 +1,13 @@
+{
+  "dataset": "customer_segments",
+  "row_count": 10000,
+  "columns": 5,
+  "schema": {
+    "segment_id": "object",
+    "customer_id": "object",
+    "segment_name": "object",
+    "assignment_date": "datetime64[ns]",
+    "is_active": "bool"
+  },
+  "generated_at": "2026-07-17T22:09:49.326677+00:00"
+}

@@ -1,0 +1,12 @@
+{
+  "dataset": "regions",
+  "row_count": 9,
+  "columns": 4,
+  "schema": {
+    "region_id": "object",
+    "region_name": "object",
+    "country": "object",
+    "regional_manager_id": "object"
+  },
+  "generated_at": "2026-07-17T22:09:43.880326+00:00"
+}

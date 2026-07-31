@@ -1,0 +1,12 @@
+{
+  "dataset": "transaction_types",
+  "row_count": 10,
+  "columns": 4,
+  "schema": {
+    "transaction_type_id": "object",
+    "type_name": "object",
+    "description": "object",
+    "is_credit": "bool"
+  },
+  "generated_at": "2026-07-17T22:09:43.886125+00:00"
+}

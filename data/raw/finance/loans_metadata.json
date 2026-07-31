@@ -1,0 +1,19 @@
+{
+  "dataset": "loans",
+  "row_count": 5000,
+  "columns": 11,
+  "schema": {
+    "loan_id": "object",
+    "customer_id": "object",
+    "funding_account_id": "object",
+    "loan_type": "object",
+    "loan_amount": "float64",
+    "principal_balance": "float64",
+    "interest_rate": "float64",
+    "start_date": "object",
+    "term_months": "int64",
+    "status": "object",
+    "end_date": "datetime64[ns]"
+  },
+  "generated_at": "2026-07-17T22:09:51.833856+00:00"
+}

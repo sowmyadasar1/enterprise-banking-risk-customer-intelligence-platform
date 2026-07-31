@@ -1,0 +1,16 @@
+{
+  "dataset": "beneficiaries",
+  "row_count": 15000,
+  "columns": 8,
+  "schema": {
+    "beneficiary_id": "object",
+    "customer_id": "object",
+    "first_name": "object",
+    "last_name": "object",
+    "relationship": "object",
+    "allocation_percentage": "float64",
+    "contact_number": "object",
+    "email": "object"
+  },
+  "generated_at": "2026-07-17T22:09:51.562321+00:00"
+}

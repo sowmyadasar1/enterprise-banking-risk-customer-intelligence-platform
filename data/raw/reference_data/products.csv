@@ -1,0 +1,25 @@
+product_id,product_name,product_type,interest_rate,minimum_balance,monthly_fee,is_active,launch_date
+PRD0001,"Rodriguez, Figueroa and Sanchez Savings Account",Savings Account,0.13,2750.29,5.0,True,2009-05-02
+PRD0002,Rhodes PLC Savings Account,Savings Account,3.38,8921.8,0.0,False,2008-04-13
+PRD0003,Johnson-Davis Checking Account,Checking Account,0.15,2186.38,0.0,True,2011-03-13
+PRD0004,"Johnson, Gonzalez and Santos Investment Account",Investment Account,1.1,5892.66,0.0,True,2017-06-10
+PRD0005,Cole LLC Investment Account,Investment Account,1.7,1554.79,10.0,True,2022-09-24
+PRD0006,Blake and Sons Savings Account,Savings Account,1.9,3589.79,10.0,True,2020-07-03
+PRD0007,Ramirez-Lewis Checking Account,Checking Account,3.65,5362.28,25.0,True,2021-10-24
+PRD0008,Davis Inc Mortgage,Mortgage,4.15,0.0,10.0,True,2013-09-21
+PRD0009,Munoz-Roman Savings Account,Savings Account,0.23,2278.98,10.0,True,2021-02-19
+PRD0010,"Martinez, Nielsen and Miller Personal Loan",Personal Loan,17.33,0.0,25.0,True,2012-05-28
+PRD0011,"Montgomery, Hensley and Ray Business Checking",Business Checking,3.18,0.0,10.0,True,2020-08-19
+PRD0012,Stanley LLC Auto Loan,Auto Loan,7.11,0.0,10.0,True,2026-04-01
+PRD0013,Delacruz Group Credit Card,Credit Card,10.69,0.0,5.0,True,2012-02-07
+PRD0014,"Flowers, Martin and Kelly Business Checking",Business Checking,1.9,0.0,5.0,True,2019-12-12
+PRD0015,"Zuniga, Wong and Lynch Checking Account",Checking Account,1.15,321.0,10.0,False,2009-12-19
+PRD0016,"Sanchez, Ford and Nelson Mortgage",Mortgage,0.33,0.0,10.0,True,2025-01-18
+PRD0017,"Hawkins, Cohen and Cameron Business Checking",Business Checking,1.98,0.0,25.0,True,2022-01-23
+PRD0018,Underwood LLC Mortgage,Mortgage,0.7,0.0,10.0,False,2014-07-26
+PRD0019,Clark PLC Investment Account,Investment Account,1.81,9973.26,5.0,False,2024-01-26
+PRD0020,Lewis-Porter Savings Account,Savings Account,3.78,8611.03,5.0,True,2024-03-27
+PRD0021,"Ellis, Baker and Wright Investment Account",Investment Account,2.98,3847.67,25.0,True,2017-10-08
+PRD0022,Burgess-Patterson Checking Account,Checking Account,3.4,1145.52,10.0,True,2018-03-19
+PRD0023,Robinson-Bright Savings Account,Savings Account,1.47,1581.58,0.0,True,2016-09-25
+PRD0024,Campos Inc Credit Card,Credit Card,10.16,0.0,0.0,True,2009-08-07

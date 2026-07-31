@@ -1,0 +1,18 @@
+{
+  "dataset": "credit_cards",
+  "row_count": 8000,
+  "columns": 10,
+  "schema": {
+    "card_id": "object",
+    "customer_id": "object",
+    "account_id": "object",
+    "card_number": "object",
+    "expiration_date": "object",
+    "cvv": "object",
+    "card_type": "object",
+    "is_active": "bool",
+    "issued_date": "object",
+    "credit_limit": "float64"
+  },
+  "generated_at": "2026-07-17T22:09:52.122682+00:00"
+}

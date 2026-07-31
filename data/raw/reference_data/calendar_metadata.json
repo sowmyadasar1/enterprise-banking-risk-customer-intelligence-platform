@@ -1,0 +1,18 @@
+{
+  "dataset": "calendar",
+  "row_count": 3650,
+  "columns": 10,
+  "schema": {
+    "date_id": "int64",
+    "full_date": "datetime64[ns]",
+    "year": "int64",
+    "month": "int64",
+    "day": "int64",
+    "quarter": "int64",
+    "day_of_week": "int64",
+    "day_name": "object",
+    "is_weekend": "bool",
+    "is_holiday": "bool"
+  },
+  "generated_at": "2026-07-17T22:09:43.938397+00:00"
+}

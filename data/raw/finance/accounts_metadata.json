@@ -1,0 +1,17 @@
+{
+  "dataset": "accounts",
+  "row_count": 15000,
+  "columns": 9,
+  "schema": {
+    "account_id": "object",
+    "customer_id": "object",
+    "branch_id": "object",
+    "account_type": "object",
+    "balance": "float64",
+    "currency": "object",
+    "open_date": "object",
+    "status": "object",
+    "interest_rate": "float64"
+  },
+  "generated_at": "2026-07-17T22:09:51.748043+00:00"
+}

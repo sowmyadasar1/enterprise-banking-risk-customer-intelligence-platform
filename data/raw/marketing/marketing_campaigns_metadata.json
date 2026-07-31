@@ -1,0 +1,16 @@
+{
+  "dataset": "marketing_campaigns",
+  "row_count": 500,
+  "columns": 8,
+  "schema": {
+    "campaign_id": "object",
+    "campaign_name": "object",
+    "campaign_type": "object",
+    "target_audience": "object",
+    "start_date": "object",
+    "end_date": "object",
+    "budget": "float64",
+    "status": "object"
+  },
+  "generated_at": "2026-07-17T22:10:19.172730+00:00"
+}

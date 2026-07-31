@@ -1,0 +1,14 @@
+{
+  "dataset": "customer_risk_scores",
+  "row_count": 10000,
+  "columns": 6,
+  "schema": {
+    "risk_id": "object",
+    "customer_id": "object",
+    "risk_score": "int64",
+    "risk_category": "object",
+    "assessment_date": "datetime64[ns]",
+    "model_version": "object"
+  },
+  "generated_at": "2026-07-17T22:10:01.645721+00:00"
+}

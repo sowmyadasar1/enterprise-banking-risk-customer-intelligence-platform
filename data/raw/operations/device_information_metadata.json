@@ -1,0 +1,15 @@
+{
+  "dataset": "device_information",
+  "row_count": 25000,
+  "columns": 7,
+  "schema": {
+    "device_id": "object",
+    "customer_id": "object",
+    "device_type": "object",
+    "os": "object",
+    "ip_address": "object",
+    "is_trusted": "bool",
+    "registered_at": "datetime64[ns]"
+  },
+  "generated_at": "2026-07-17T22:10:24.145269+00:00"
+}

@@ -1,0 +1,14 @@
+{
+  "dataset": "merchants",
+  "row_count": 2000,
+  "columns": 6,
+  "schema": {
+    "merchant_id": "object",
+    "category_id": "object",
+    "merchant_name": "object",
+    "country": "object",
+    "risk_score": "int64",
+    "created_at": "datetime64[ns]"
+  },
+  "generated_at": "2026-07-17T22:09:45.065099+00:00"
+}

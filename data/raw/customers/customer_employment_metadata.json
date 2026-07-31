@@ -1,0 +1,15 @@
+{
+  "dataset": "customer_employment",
+  "row_count": 9000,
+  "columns": 7,
+  "schema": {
+    "employment_id": "object",
+    "customer_id": "object",
+    "employer_name": "object",
+    "occupation": "object",
+    "annual_income": "float64",
+    "employment_status": "object",
+    "start_date": "object"
+  },
+  "generated_at": "2026-07-17T22:09:47.885949+00:00"
+}

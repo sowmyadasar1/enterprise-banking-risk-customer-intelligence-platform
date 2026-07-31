@@ -1,0 +1,11 @@
+transaction_type_id,type_name,description,is_credit
+bdd640fb-0667-4ad1-9c80-317fa3b1799d,PURCHASE,Point of sale purchase,False
+23b8c1e9-3924-46de-beb1-3b9046685257,WITHDRAWAL,ATM Withdrawal,False
+bd9c66b3-ad3c-4d6d-9a3d-1fa7bc8960a9,DEPOSIT,Cash or check deposit,True
+972a8469-1641-4f82-8b9d-2434e465e150,TRANSFER_IN,Inbound transfer,True
+17fc695a-07a0-4a6e-8822-e8f36c031199,TRANSFER_OUT,Outbound transfer,False
+9a1de644-815e-46d1-bb8f-aa1837f8a88b,FEE,Bank fee,False
+b74d0fb1-32e7-4629-8fad-c1a606cb0fb3,INTEREST,Interest paid,True
+6b65a6a4-8b81-48f6-b38a-088ca65ed389,REFUND,Merchant refund,True
+47378190-96da-4dac-b2ff-5d2a386ecbe0,PAYMENT,Bill payment,False
+c241330b-01a9-471f-9e8a-774bcf36d58b,DIRECT_DEPOSIT,Payroll direct deposit,True

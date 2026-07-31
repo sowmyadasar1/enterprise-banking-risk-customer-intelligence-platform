@@ -1,0 +1,13 @@
+{
+  "dataset": "exchange_rates",
+  "row_count": 1000,
+  "columns": 5,
+  "schema": {
+    "rate_id": "object",
+    "date": "object",
+    "from_currency": "object",
+    "to_currency": "object",
+    "exchange_rate": "float64"
+  },
+  "generated_at": "2026-07-17T22:09:43.914747+00:00"
+}

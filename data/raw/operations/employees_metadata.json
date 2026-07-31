@@ -1,0 +1,18 @@
+{
+  "dataset": "employees",
+  "row_count": 5000,
+  "columns": 10,
+  "schema": {
+    "employee_id": "object",
+    "first_name": "object",
+    "last_name": "object",
+    "email": "object",
+    "phone": "object",
+    "job_title": "object",
+    "branch_id": "object",
+    "hire_date": "object",
+    "salary": "float64",
+    "is_active": "bool"
+  },
+  "generated_at": "2026-07-17T22:09:44.915428+00:00"
+}

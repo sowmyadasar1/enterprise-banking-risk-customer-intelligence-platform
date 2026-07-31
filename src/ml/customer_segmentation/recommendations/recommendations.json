@@ -1,0 +1,91 @@
+{
+  "VIP Customers": {
+    "persona": "VIP Customers",
+    "customer_count": 2221,
+    "priority": "Platinum",
+    "marketing_strategy": "Exclusive invitation-only events, personalized wealth management offers, priority customer service.",
+    "retention_strategy": "Assign dedicated relationship manager, quarterly portfolio reviews, premium loyalty rewards.",
+    "cross_sell": [
+      "Private banking services",
+      "Investment portfolio management",
+      "Insurance products"
+    ],
+    "upsell": [
+      "Platinum credit cards",
+      "Premium mortgage products",
+      "International banking"
+    ],
+    "product_recommendations": [
+      "Wealth management",
+      "Trust services",
+      "Brokerage accounts"
+    ],
+    "relationship_management": "White-glove concierge service with dedicated team.",
+    "campaign_suggestions": [
+      "Exclusive investment webinars",
+      "VIP appreciation dinners",
+      "Early access to new products"
+    ],
+    "business_priority": "Critical \u2014 Protect and grow highest-value relationships.",
+    "expected_impact": "Retention of top 5% revenue contributors, potential 15-20% AUM growth."
+  },
+  "High Net Worth": {
+    "persona": "High Net Worth",
+    "customer_count": 3916,
+    "priority": "Gold",
+    "marketing_strategy": "Targeted wealth advisory communications, tax optimization seminars, estate planning.",
+    "retention_strategy": "Proactive outreach from senior advisors, competitive rate matching, fee waivers.",
+    "cross_sell": [
+      "Tax-advantaged investment accounts",
+      "Estate planning",
+      "Insurance bundles"
+    ],
+    "upsell": [
+      "Premium savings accounts",
+      "High-yield CDs",
+      "Commercial lending"
+    ],
+    "product_recommendations": [
+      "Fixed income products",
+      "Real estate investment trusts",
+      "Structured deposits"
+    ],
+    "relationship_management": "Senior relationship manager with quarterly touchpoints.",
+    "campaign_suggestions": [
+      "Wealth preservation workshops",
+      "Charitable giving programs",
+      "Referral bonuses"
+    ],
+    "business_priority": "High \u2014 Maximize asset retention and fee income.",
+    "expected_impact": "Increase share-of-wallet by 10-15%, reduce attrition to under 3%."
+  },
+  "Dormant Customers": {
+    "persona": "Dormant Customers",
+    "customer_count": 3863,
+    "priority": "At-Risk",
+    "marketing_strategy": "Win-back campaigns with incentives, re-engagement emails, dormancy alerts.",
+    "retention_strategy": "Account reactivation bonuses, personalized \"we miss you\" outreach, fee forgiveness.",
+    "cross_sell": [
+      "Simple savings products",
+      "Mobile banking activation",
+      "Automatic transfers"
+    ],
+    "upsell": [
+      "Active checking account incentives",
+      "Cashback offers on reactivation"
+    ],
+    "product_recommendations": [
+      "High-yield savings",
+      "Round-up features",
+      "Goal-based saving"
+    ],
+    "relationship_management": "Outbound call center campaign with special offers.",
+    "campaign_suggestions": [
+      "Reactivation bonus campaigns",
+      "Win-back email series",
+      "SMS nudges"
+    ],
+    "business_priority": "High \u2014 Prevent full attrition and recover dormant balances.",
+    "expected_impact": "Reactivate 15-20% of dormant accounts, recover $2M+ in deposits."
+  }
+}

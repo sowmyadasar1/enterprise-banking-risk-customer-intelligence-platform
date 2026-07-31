@@ -1,0 +1,12 @@
+{
+  "dataset": "merchant_categories",
+  "row_count": 10,
+  "columns": 4,
+  "schema": {
+    "category_id": "object",
+    "category_name": "object",
+    "description": "object",
+    "mcc_code": "object"
+  },
+  "generated_at": "2026-07-17T22:09:43.887571+00:00"
+}

@@ -1,0 +1,15 @@
+{
+  "dataset": "login_history",
+  "row_count": 100000,
+  "columns": 7,
+  "schema": {
+    "login_id": "object",
+    "customer_id": "object",
+    "device_id": "object",
+    "login_timestamp": "datetime64[ns]",
+    "ip_address": "object",
+    "location": "object",
+    "status": "object"
+  },
+  "generated_at": "2026-07-17T22:10:58.867769+00:00"
+}

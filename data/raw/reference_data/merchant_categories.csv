@@ -1,0 +1,11 @@
+category_id,category_name,description,mcc_code
+bdd640fb-0667-4ad1-9c80-317fa3b1799d,Groceries,Category for groceries,3615
+23b8c1e9-3924-46de-beb1-3b9046685257,Dining,Category for dining,7924
+bd9c66b3-ad3c-4d6d-9a3d-1fa7bc8960a9,Travel,Category for travel,6574
+972a8469-1641-4f82-8b9d-2434e465e150,Entertainment,Category for entertainment,5552
+17fc695a-07a0-4a6e-8822-e8f36c031199,Retail,Category for retail,3547
+9a1de644-815e-46d1-bb8f-aa1837f8a88b,Utilities,Category for utilities,4527
+b74d0fb1-32e7-4629-8fad-c1a606cb0fb3,Health,Category for health,6514
+6b65a6a4-8b81-48f6-b38a-088ca65ed389,Automotive,Category for automotive,2674
+47378190-96da-4dac-b2ff-5d2a386ecbe0,Education,Category for education,2519
+c241330b-01a9-471f-9e8a-774bcf36d58b,Services,Category for services,7224

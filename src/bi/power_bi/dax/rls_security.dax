@@ -1,0 +1,41 @@
+// ---------------------------------------------------------
+// ROW-LEVEL SECURITY (RLS) RULES
+// Description: Defines DAX filters applied to security roles.
+// ---------------------------------------------------------
+
+// ROLE: Executive
+// Description: C-Level suite, unrestricted access to all data.
+// Table: dim_branch
+// Filter Expression:
+= TRUE()
+
+
+// ROLE: Branch Manager
+// Description: Can only see data associated with their assigned branch.
+// Implementation: Assumes a mapping table 'dim_employee' with UserPrincipalName() and branch_id.
+// Table: dim_branch
+// Filter Expression:
+[branch_id] = 
+    CALCULATE(
+        MAX(dim_employee[branch_id]),
+        dim_employee[email] = USERPRINCIPALNAME()
+    )
+
+
+// ROLE: Regional Manager
+// Description: Can only see data within their assigned region.
+// Table: dim_branch
+// Filter Expression:
+[region_id] = 
+    CALCULATE(
+        MAX(dim_employee[region_id]),
+        dim_employee[email] = USERPRINCIPALNAME()
+    )
+
+
+// ROLE: Fraud Analyst
+// Description: Can see all transactions but PII (Names, Emails) must be masked.
+// Implementation: Object-Level Security (OLS) should be applied to hide 'dim_customer'[email] and 'dim_customer'[phone_number].
+// Table: fact_transactions
+// Filter Expression:
+= TRUE()

@@ -1,0 +1,17 @@
+{
+  "dataset": "customer_addresses",
+  "row_count": 10000,
+  "columns": 9,
+  "schema": {
+    "address_id": "object",
+    "customer_id": "object",
+    "address_type": "object",
+    "street_address": "object",
+    "city": "object",
+    "state": "object",
+    "postal_code": "object",
+    "country": "object",
+    "is_primary": "bool"
+  },
+  "generated_at": "2026-07-17T22:09:47.134202+00:00"
+}

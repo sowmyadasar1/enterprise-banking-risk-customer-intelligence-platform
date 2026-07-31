@@ -1,0 +1,15 @@
+{
+  "dataset": "loan_payments",
+  "row_count": 50000,
+  "columns": 7,
+  "schema": {
+    "payment_id": "object",
+    "loan_id": "object",
+    "payment_date": "object",
+    "total_amount": "float64",
+    "principal_amount": "float64",
+    "interest_amount": "float64",
+    "status": "object"
+  },
+  "generated_at": "2026-07-17T22:09:59.538724+00:00"
+}

@@ -1,0 +1,48 @@
+# Version control
+.git
+.github
+.gitignore
+
+# Python caches and compiled files
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Environment files
+.env
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Node modules
+node_modules/
+
+# Data directories
+data/bronze/*
+data/silver/*
+data/gold/*
+
+# Notebooks and Documentation
+notebooks/
+docs/
+*.md
+!README.md
+
+# Cache and logs
+.mypy_cache/
+.pytest_cache/
+logs/
+*.log
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

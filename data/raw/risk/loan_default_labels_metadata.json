@@ -1,0 +1,14 @@
+{
+  "dataset": "loan_default_labels",
+  "row_count": 5000,
+  "columns": 6,
+  "schema": {
+    "label_id": "object",
+    "loan_id": "object",
+    "is_default": "bool",
+    "default_date": "datetime64[ns]",
+    "amount_defaulted": "float64",
+    "recovery_amount": "float64"
+  },
+  "generated_at": "2026-07-17T22:10:00.192024+00:00"
+}

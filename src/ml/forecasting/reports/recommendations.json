@@ -1,0 +1,18 @@
+{
+    "transaction_volume": [
+        "High Transaction Volume Risk: Increase server capacity and database IOPS to handle potential 20%+ spikes.",
+        "Capacity Planning: Ensure core banking APIs are horizontally scaled for the next 90 days."
+    ],
+    "revenue": [
+        "Revenue Risk: Prepare contingency budgets; conservative forecast implies a 15%+ drop vs expected base.",
+        "Revenue Planning: Align marketing spend with the Optimistic baseline to capture potential upside."
+    ],
+    "loan_demand": [
+        "Capital Allocation: Ensure sufficient liquidity is reserved for the 90-day base case loan originations.",
+        "Risk Planning: Tighten credit scoring slightly if the Conservative scenario trends downwards (indicating market contraction)."
+    ],
+    "new_customers": [
+        "Branch Planning: Allocate additional customer support staff in key branches if new customer acquisition trends toward the Optimistic bound.",
+        "Marketing Planning: Maintain CAC efficiency campaigns to ensure the baseline acquisition target is met."
+    ]
+}

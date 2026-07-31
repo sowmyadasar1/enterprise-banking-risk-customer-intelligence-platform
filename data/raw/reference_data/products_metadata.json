@@ -1,0 +1,16 @@
+{
+  "dataset": "products",
+  "row_count": 24,
+  "columns": 8,
+  "schema": {
+    "product_id": "object",
+    "product_name": "object",
+    "product_type": "object",
+    "interest_rate": "float64",
+    "minimum_balance": "float64",
+    "monthly_fee": "float64",
+    "is_active": "bool",
+    "launch_date": "object"
+  },
+  "generated_at": "2026-07-17T22:09:43.884414+00:00"
+}

@@ -1,0 +1,73 @@
+// ---------------------------------------------------------
+// MEASURE TABLE: Time Intelligence
+// Table Name: _TimeIntelligence
+// Requires a proper Calendar dimension (dim_calendar) marked as Date Table.
+// ---------------------------------------------------------
+
+// --- REVENUE TIME INTELLIGENCE ---
+Revenue YTD = TOTALYTD([Total Revenue], dim_calendar[Date])
+
+Revenue QTD = TOTALQTD([Total Revenue], dim_calendar[Date])
+
+Revenue MTD = TOTALMTD([Total Revenue], dim_calendar[Date])
+
+Revenue PY = CALCULATE([Total Revenue], SAMEPERIODLASTYEAR(dim_calendar[Date]))
+
+Revenue YoY Growth = [Total Revenue] - [Revenue PY]
+
+Revenue YoY Growth % = 
+    DIVIDE(
+        [Revenue YoY Growth],
+        [Revenue PY],
+        0
+    )
+
+Revenue PM = CALCULATE([Total Revenue], PREVIOUSMONTH(dim_calendar[Date]))
+
+Revenue MoM Growth % = 
+    DIVIDE(
+        ([Total Revenue] - [Revenue PM]),
+        [Revenue PM],
+        0
+    )
+
+Rolling 12-Month Revenue = 
+    CALCULATE(
+        [Total Revenue],
+        DATESINPERIOD(
+            dim_calendar[Date],
+            MAX(dim_calendar[Date]),
+            -12,
+            MONTH
+        )
+    )
+
+// --- CUSTOMER GROWTH TIME INTELLIGENCE ---
+Customers PY = CALCULATE([Total Customers], SAMEPERIODLASTYEAR(dim_calendar[Date]))
+
+Customer YoY Growth % = 
+    DIVIDE(
+        ([Total Customers] - [Customers PY]),
+        [Customers PY],
+        0
+    )
+
+New Customers MTD = 
+    CALCULATE(
+        [Total Customers],
+        DATESMTD(dim_calendar[Date]),
+        USERELATIONSHIP(dim_calendar[Date], dim_customer[join_date])
+    )
+
+// --- FORECAST VARIANCE ---
+// Assumes 'fact_forecasts' is loaded from Phase 7D.
+Revenue Forecast = SUM(fact_forecasts[revenue_forecast])
+
+Revenue Variance to Forecast = [Total Revenue] - [Revenue Forecast]
+
+Revenue Variance % = 
+    DIVIDE(
+        [Revenue Variance to Forecast],
+        [Revenue Forecast],
+        0
+    )

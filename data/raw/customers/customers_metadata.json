@@ -1,0 +1,20 @@
+{
+  "dataset": "customers",
+  "row_count": 10000,
+  "columns": 12,
+  "schema": {
+    "customer_id": "object",
+    "first_name": "object",
+    "last_name": "object",
+    "date_of_birth": "object",
+    "gender": "object",
+    "email": "object",
+    "phone_number": "object",
+    "ssn": "object",
+    "join_date": "object",
+    "customer_type": "object",
+    "risk_rating": "object",
+    "is_active": "bool"
+  },
+  "generated_at": "2026-07-17T22:09:46.378605+00:00"
+}

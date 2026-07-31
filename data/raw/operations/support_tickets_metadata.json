@@ -1,0 +1,17 @@
+{
+  "dataset": "support_tickets",
+  "row_count": 20000,
+  "columns": 9,
+  "schema": {
+    "ticket_id": "object",
+    "customer_id": "object",
+    "issue_category": "object",
+    "priority": "object",
+    "status": "object",
+    "created_at": "datetime64[ns]",
+    "resolved_at": "datetime64[ns]",
+    "assigned_to_employee_id": "object",
+    "satisfaction_score": "float64"
+  },
+  "generated_at": "2026-07-17T22:10:19.742353+00:00"
+}

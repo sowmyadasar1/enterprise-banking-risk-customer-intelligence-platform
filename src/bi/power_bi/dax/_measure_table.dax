@@ -1,0 +1,78 @@
+// ---------------------------------------------------------
+// MEASURE TABLE: Core Business KPIs
+// Table Name: _Measures
+// Description: Central repository for all base measures.
+// ---------------------------------------------------------
+
+// --- REVENUE & PROFIT ---
+Total Revenue = SUM(fact_transactions[amount])
+
+Average Transaction Value = AVERAGE(fact_transactions[amount])
+
+Transaction Volume = COUNTROWS(fact_transactions)
+
+Total Profit = [Total Revenue] * 0.02  // Simulated 2% margin
+
+// --- LOANS ---
+Total Loan Demand = SUM(fact_loans[loan_amount])
+
+Total Outstanding Loans = CALCULATE(SUM(fact_loans[loan_amount]), fact_loans[status] = "Active")
+
+Average Loan Size = AVERAGE(fact_loans[loan_amount])
+
+Loan Default Rate = 
+    DIVIDE(
+        CALCULATE(COUNTROWS(fact_loans), fact_loans[status] = "Defaulted"),
+        COUNTROWS(fact_loans),
+        0
+    )
+
+Loan Approval Rate = 
+    DIVIDE(
+        CALCULATE(COUNTROWS(fact_loans), fact_loans[status] IN {"Active", "Closed", "Defaulted"}),
+        CALCULATE(COUNTROWS(fact_loans), ALL(fact_loans[status])),
+        0
+    )
+
+// --- CUSTOMERS ---
+Total Customers = DISTINCTCOUNT(dim_customer[customer_id])
+
+Active Customers = 
+    CALCULATE(
+        DISTINCTCOUNT(fact_transactions[customer_id]),
+        fact_transactions[transaction_date] >= (TODAY() - 30)
+    )
+
+Average Customer Balance = AVERAGE(dim_account[current_balance])
+
+Total Deposits = SUM(dim_account[current_balance])
+
+Customer Lifetime Value (Avg) = AVERAGE(view_kpi_clv[annualized_clv])
+
+// --- FRAUD & RISK ---
+Total Fraud Cases = COUNTROWS(fact_fraud)
+
+Total Fraud Loss = SUM(fact_fraud[financial_loss])
+
+Fraud Rate = 
+    DIVIDE(
+        [Total Fraud Cases],
+        [Transaction Volume],
+        0
+    ) * 1000  // Per 1000 transactions
+
+Average Risk Score = AVERAGE(dim_risk[credit_score])
+
+High Risk Customers = CALCULATE([Total Customers], dim_risk[risk_category] = "High")
+
+// --- MARKETING & OPERATIONS ---
+Marketing Conversion Rate = 
+    DIVIDE(
+        CALCULATE(COUNTROWS(fact_marketing_responses), fact_marketing_responses[converted] = TRUE()),
+        COUNTROWS(fact_marketing_responses),
+        0
+    )
+
+Average Support Resolution Time = AVERAGE(fact_support_tickets[resolution_hours])
+
+Open Support Tickets = CALCULATE(COUNTROWS(fact_support_tickets), fact_support_tickets[status] = "Open")

@@ -1,0 +1,15 @@
+{
+  "dataset": "fraud_investigations",
+  "row_count": 1000,
+  "columns": 7,
+  "schema": {
+    "investigation_id": "object",
+    "case_id": "object",
+    "investigator_id": "object",
+    "start_date": "datetime64[ns]",
+    "end_date": "datetime64[ns]",
+    "outcome": "object",
+    "notes": "object"
+  },
+  "generated_at": "2026-07-17T22:10:19.157109+00:00"
+}

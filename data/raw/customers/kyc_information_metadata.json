@@ -1,0 +1,17 @@
+{
+  "dataset": "kyc_information",
+  "row_count": 10000,
+  "columns": 9,
+  "schema": {
+    "kyc_id": "object",
+    "customer_id": "object",
+    "document_type": "object",
+    "document_number": "object",
+    "issue_date": "object",
+    "expiry_date": "object",
+    "verification_status": "object",
+    "last_verified_date": "object",
+    "verified_by_employee_id": "object"
+  },
+  "generated_at": "2026-07-17T22:09:49.769853+00:00"
+}

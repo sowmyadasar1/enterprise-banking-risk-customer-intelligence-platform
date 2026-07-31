@@ -1,0 +1,17 @@
+{
+  "dataset": "branches",
+  "row_count": 500,
+  "columns": 9,
+  "schema": {
+    "branch_id": "object",
+    "branch_name": "object",
+    "region_id": "object",
+    "address": "object",
+    "city": "object",
+    "state": "object",
+    "zip_code": "object",
+    "phone_number": "object",
+    "open_date": "object"
+  },
+  "generated_at": "2026-07-17T22:09:43.999715+00:00"
+}

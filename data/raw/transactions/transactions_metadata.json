@@ -1,0 +1,17 @@
+{
+  "dataset": "transactions",
+  "row_count": 500000,
+  "columns": 9,
+  "schema": {
+    "transaction_id": "object",
+    "account_id": "object",
+    "merchant_id": "object",
+    "transaction_type_id": "object",
+    "amount": "float64",
+    "currency": "object",
+    "timestamp": "datetime64[ns]",
+    "channel": "object",
+    "status": "object"
+  },
+  "generated_at": "2026-07-17T22:09:58.919549+00:00"
+}
