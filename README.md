@@ -133,7 +133,6 @@ Explore the `docs/` folder for detailed technical and business documentation:
 
 ## 📸 Platform Gallery (Screenshots)
 
-*(Maintainers: Replace these placeholders with actual screenshots before portfolio submission)*
 
 <details>
 <summary><b>System Architecture & Data Flow</b></summary>
@@ -163,20 +162,10 @@ Explore the `docs/` folder for detailed technical and business documentation:
 
 ---
 
-## 🗺️ Future Roadmap
-
-- **Phase 12**: Migrate SQLite Data Warehouse to **Snowflake** or **BigQuery**.
-- **Phase 13**: Orchestrate the Medallion ETL pipeline using **Apache Airflow**.
-- **Phase 14**: Implement **Apache Kafka** for real-time transaction streaming and fraud scoring.
-- **Phase 15**: Add **Prometheus and Grafana** for API health and model drift monitoring.
-
----
 
 ## 👨‍💻 Author & Contact
 
-Built by **[Your Name Here]** as a demonstration of production-grade Data Science and Engineering.
-- **LinkedIn**: [Your LinkedIn URL]
-- **Portfolio**: [Your Portfolio URL]
+Built by **Sowmya Dasari** as a demonstration of production-grade Data Science and Engineering.
 
 ---
 <div align="center">
