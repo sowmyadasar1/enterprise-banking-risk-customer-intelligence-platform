@@ -489,42 +489,6 @@ The repository includes additional technical documentation:
 
 ---
 
-# Project Gallery
-
-## System Architecture
-
-![System Architecture](docs/images/system-architecture.png)
-
-## Data Pipeline
-
-![Data Pipeline](docs/images/data-pipeline.png)
-
-## Data Warehouse
-
-![Data Warehouse](docs/images/data-warehouse.png)
-
-## Power BI Dashboards
-
-![Power BI Dashboards](docs/images/power-bi-dashboard.png)
-
-## Fraud Detection
-
-![Fraud Detection Dashboard](docs/images/fraud-dashboard.png)
-
-## Customer Segmentation
-
-![Customer Segmentation Dashboard](docs/images/customer-segmentation.png)
-
-## FastAPI
-
-![FastAPI Documentation](docs/images/fastapi.png)
-
-## MLflow
-
-![MLflow Model Registry](docs/images/mlflow.png)
-
----
-
 # Limitations
 
 This project is a portfolio and learning project based on simulated banking data and should not be considered a production banking system.
