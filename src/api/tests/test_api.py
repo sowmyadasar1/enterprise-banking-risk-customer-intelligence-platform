@@ -92,7 +92,9 @@ class TestValidation:
 #  PREDICTION TESTS (End-to-End)
 # ═══════════════════════════════════════════════════════════════════
 from ..config import FRAUD_MODEL_DIR
+
 models_available = (FRAUD_MODEL_DIR / "xgboost.joblib").exists()
+
 
 @pytest.mark.skipif(not models_available, reason="ML models not available locally")
 class TestPredictions:

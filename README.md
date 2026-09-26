@@ -19,6 +19,34 @@
 
 ---
 
+# Project Gallery
+
+## System Architecture
+![System Architecture](docs/images/system-architecture.png)
+
+## Data Pipeline
+![Data Pipeline](docs/images/data-pipeline.png)
+
+## Data Warehouse
+![Data Warehouse](docs/images/data-warehouse.png)
+
+## Power BI Dashboards
+![Power BI Dashboards](docs/images/power-bi-dashboard.png)
+
+## Fraud Detection
+![Fraud Detection Dashboard](docs/images/fraud-dashboard.png)
+
+## Customer Segmentation
+![Customer Segmentation Dashboard](docs/images/customer-segmentation.png)
+
+## FastAPI
+![FastAPI Documentation](docs/images/fastapi.png)
+
+## MLflow
+![MLflow Model Registry](docs/images/mlflow.png)
+
+---
+
 ## Overview
 
 The **Enterprise Banking Risk & Customer Intelligence Platform** is an end-to-end project that brings together data engineering, analytics, machine learning, business intelligence, and model serving around a banking use case.
