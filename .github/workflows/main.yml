@@ -47,4 +47,4 @@ jobs:
         
     - name: Validate Docker Compose
       run: |
-        docker-compose config
+        docker compose config
