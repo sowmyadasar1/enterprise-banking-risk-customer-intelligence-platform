@@ -32,56 +32,78 @@ audit = PipelineAuditLogger()
 # Dataset → raw folder mapping (mirrors run_generator.py)
 # ---------------------------------------------------------------------------
 DATASET_FOLDER_MAP: Dict[str, str] = {
-    "regions":               "reference_data",
-    "branches":              "reference_data",
-    "products":              "reference_data",
-    "transaction_types":     "reference_data",
-    "merchant_categories":   "reference_data",
-    "exchange_rates":        "reference_data",
-    "calendar":              "reference_data",
-    "customers":             "customers",
-    "customer_addresses":    "customers",
-    "customer_employment":   "customers",
-    "customer_segments":     "customers",
-    "kyc_information":       "customers",
-    "beneficiaries":         "customers",
-    "customer_risk_scores":  "customers",
-    "accounts":              "finance",
-    "credit_cards":          "finance",
-    "loans":                 "finance",
-    "loan_payments":         "finance",
-    "loan_default_labels":   "risk",
-    "employees":             "operations",
-    "support_tickets":       "operations",
-    "device_information":    "operations",
-    "login_history":         "operations",
-    "marketing_campaigns":   "marketing",
-    "campaign_responses":    "marketing",
-    "merchants":             "transactions",
-    "transactions":          "transactions",
-    "fraud_cases":           "fraud",
-    "fraud_investigations":  "fraud",
+    "regions": "reference_data",
+    "branches": "reference_data",
+    "products": "reference_data",
+    "transaction_types": "reference_data",
+    "merchant_categories": "reference_data",
+    "exchange_rates": "reference_data",
+    "calendar": "reference_data",
+    "customers": "customers",
+    "customer_addresses": "customers",
+    "customer_employment": "customers",
+    "customer_segments": "customers",
+    "kyc_information": "customers",
+    "beneficiaries": "customers",
+    "customer_risk_scores": "customers",
+    "accounts": "finance",
+    "credit_cards": "finance",
+    "loans": "finance",
+    "loan_payments": "finance",
+    "loan_default_labels": "risk",
+    "employees": "operations",
+    "support_tickets": "operations",
+    "device_information": "operations",
+    "login_history": "operations",
+    "marketing_campaigns": "marketing",
+    "campaign_responses": "marketing",
+    "merchants": "transactions",
+    "transactions": "transactions",
+    "fraud_cases": "fraud",
+    "fraud_investigations": "fraud",
 }
 
 # Execution order respecting FK dependencies
 EXECUTION_TIERS: List[List[str]] = [
     # Tier 0: Pure reference data
-    ["regions", "products", "transaction_types", "merchant_categories", "exchange_rates", "calendar"],
+    [
+        "regions",
+        "products",
+        "transaction_types",
+        "merchant_categories",
+        "exchange_rates",
+        "calendar",
+    ],
     # Tier 1: Branches
     ["branches"],
     # Tier 2: Independent operational
     ["employees", "merchants"],
     # Tier 3: Customers
-    ["customers", "customer_addresses", "customer_employment",
-     "customer_segments", "kyc_information", "beneficiaries"],
+    [
+        "customers",
+        "customer_addresses",
+        "customer_employment",
+        "customer_segments",
+        "kyc_information",
+        "beneficiaries",
+    ],
     # Tier 4: Finance (depend on customers + branches)
     ["accounts", "loans", "credit_cards"],
     # Tier 5: Transactions
     ["transactions"],
     # Tier 6: All downstream
-    ["loan_payments", "loan_default_labels", "customer_risk_scores",
-     "fraud_cases", "fraud_investigations", "marketing_campaigns",
-     "campaign_responses", "support_tickets", "device_information", "login_history"],
+    [
+        "loan_payments",
+        "loan_default_labels",
+        "customer_risk_scores",
+        "fraud_cases",
+        "fraud_investigations",
+        "marketing_campaigns",
+        "campaign_responses",
+        "support_tickets",
+        "device_information",
+        "login_history",
+    ],
 ]
 
 
@@ -113,10 +135,10 @@ class ETLPipeline:
         self.dq_checker = DataQualityChecker()
 
         # In-memory dataset stores for cross-dataset transforms
-        self.raw_dfs:    Dict[str, pd.DataFrame] = {}
+        self.raw_dfs: Dict[str, pd.DataFrame] = {}
         self.bronze_dfs: Dict[str, pd.DataFrame] = {}
         self.silver_dfs: Dict[str, pd.DataFrame] = {}
-        self.gold_dfs:   Dict[str, pd.DataFrame] = {}
+        self.gold_dfs: Dict[str, pd.DataFrame] = {}
 
         # Pipeline summary metrics
         self.pipeline_errors: List[str] = []
@@ -139,24 +161,34 @@ class ETLPipeline:
             err = f"Extraction failed for {dataset_name}: {exc}"
             log.error(err)
             return pd.DataFrame(), PipelineResult(
-                success=False, records_in=0, records_out=0,
-                records_rejected=0, errors=[err], warnings=[],
-                duration_seconds=dur, stage="extract"
+                success=False,
+                records_in=0,
+                records_out=0,
+                records_rejected=0,
+                errors=[err],
+                warnings=[],
+                duration_seconds=dur,
+                stage="extract",
             )
 
-    def _validate(self, df: pd.DataFrame, dataset_name: str) -> Tuple[pd.DataFrame, PipelineResult]:
+    def _validate(
+        self, df: pd.DataFrame, dataset_name: str
+    ) -> Tuple[pd.DataFrame, PipelineResult]:
         """Validate schema, PKs, FKs, and business rules."""
         t0 = time.time()
         try:
-            valid_df, errors, warnings = self.validator.validate(df, dataset_name, self.raw_dfs)
+            valid_df, errors, warnings = self.validator.validate(
+                df, dataset_name, self.raw_dfs
+            )
             result = PipelineResult(
                 success=len(errors) == 0,
                 records_in=len(df),
                 records_out=len(valid_df),
                 records_rejected=len(df) - len(valid_df),
-                errors=errors, warnings=warnings,
+                errors=errors,
+                warnings=warnings,
                 duration_seconds=time.time() - t0,
-                stage="validate"
+                stage="validate",
             )
             return valid_df, result
         except Exception as exc:
@@ -164,12 +196,19 @@ class ETLPipeline:
             err = f"Validation error for {dataset_name}: {exc}"
             log.error(err)
             return df, PipelineResult(
-                success=False, records_in=len(df), records_out=len(df),
-                records_rejected=0, errors=[err], warnings=[],
-                duration_seconds=dur, stage="validate"
+                success=False,
+                records_in=len(df),
+                records_out=len(df),
+                records_rejected=0,
+                errors=[err],
+                warnings=[],
+                duration_seconds=dur,
+                stage="validate",
             )
 
-    def _clean(self, df: pd.DataFrame, dataset_name: str) -> Tuple[pd.DataFrame, PipelineResult]:
+    def _clean(
+        self, df: pd.DataFrame, dataset_name: str
+    ) -> Tuple[pd.DataFrame, PipelineResult]:
         """Clean: deduplicate, fill nulls, normalize strings/dates."""
         t0 = time.time()
         try:
@@ -181,17 +220,25 @@ class ETLPipeline:
             err = f"Cleaning error for {dataset_name}: {exc}"
             log.error(err)
             return df, PipelineResult(
-                success=False, records_in=len(df), records_out=len(df),
-                records_rejected=0, errors=[err], warnings=[],
-                duration_seconds=dur, stage="clean"
+                success=False,
+                records_in=len(df),
+                records_out=len(df),
+                records_rejected=0,
+                errors=[err],
+                warnings=[],
+                duration_seconds=dur,
+                stage="clean",
             )
 
-    def _transform(self, df: pd.DataFrame, dataset_name: str) -> Tuple[pd.DataFrame, PipelineResult]:
+    def _transform(
+        self, df: pd.DataFrame, dataset_name: str
+    ) -> Tuple[pd.DataFrame, PipelineResult]:
         """Add derived/engineered columns for Gold layer."""
         t0 = time.time()
         try:
             gold_df, result = self.transformer.transform(
-                df, dataset_name,
+                df,
+                dataset_name,
                 customers_df=self.silver_dfs.get("customers"),
                 accounts_df=self.silver_dfs.get("accounts"),
                 loans_df=self.silver_dfs.get("loans"),
@@ -204,9 +251,14 @@ class ETLPipeline:
             err = f"Transform error for {dataset_name}: {exc}"
             log.error(err)
             return df, PipelineResult(
-                success=False, records_in=len(df), records_out=len(df),
-                records_rejected=0, errors=[err], warnings=[],
-                duration_seconds=dur, stage="transform"
+                success=False,
+                records_in=len(df),
+                records_out=len(df),
+                records_rejected=0,
+                errors=[err],
+                warnings=[],
+                duration_seconds=dur,
+                stage="transform",
             )
 
     def _process_dataset(self, dataset_name: str) -> bool:
@@ -224,7 +276,15 @@ class ETLPipeline:
                 self.pipeline_errors.append(f"{dataset_name}: extraction failed")
                 return False
             self.raw_dfs[dataset_name] = df
-            audit.log_event("extract", dataset_name, result.records_in, result.records_out, result.records_rejected, "SUCCESS" if result.success else "FAIL", result.duration_seconds)
+            audit.log_event(
+                "extract",
+                dataset_name,
+                result.records_in,
+                result.records_out,
+                result.records_rejected,
+                "SUCCESS" if result.success else "FAIL",
+                result.duration_seconds,
+            )
 
             # 2. VALIDATE
             valid_df, result = self._validate(df, dataset_name)
@@ -232,30 +292,78 @@ class ETLPipeline:
                 log.warning(f"    [WARN] {w}")
             for e in result.errors:
                 log.error(f"    [ERR]  {e}")
-            audit.log_event("validate", dataset_name, result.records_in, result.records_out, result.records_rejected, "SUCCESS" if result.success else "WARN", result.duration_seconds)
+            audit.log_event(
+                "validate",
+                dataset_name,
+                result.records_in,
+                result.records_out,
+                result.records_rejected,
+                "SUCCESS" if result.success else "WARN",
+                result.duration_seconds,
+            )
 
             # 3. LOAD BRONZE (validated raw copy)
             bronze_result = self.loader.load_bronze(valid_df, dataset_name)
             self.bronze_dfs[dataset_name] = valid_df
-            audit.log_event("load_bronze", dataset_name, bronze_result.records_in, bronze_result.records_out, bronze_result.records_rejected, "SUCCESS" if bronze_result.success else "FAIL", bronze_result.duration_seconds)
+            audit.log_event(
+                "load_bronze",
+                dataset_name,
+                bronze_result.records_in,
+                bronze_result.records_out,
+                bronze_result.records_rejected,
+                "SUCCESS" if bronze_result.success else "FAIL",
+                bronze_result.duration_seconds,
+            )
 
             # 4. CLEAN
             clean_df, result = self._clean(valid_df, dataset_name)
-            audit.log_event("clean", dataset_name, result.records_in, result.records_out, result.records_rejected, "SUCCESS" if result.success else "WARN", result.duration_seconds)
+            audit.log_event(
+                "clean",
+                dataset_name,
+                result.records_in,
+                result.records_out,
+                result.records_rejected,
+                "SUCCESS" if result.success else "WARN",
+                result.duration_seconds,
+            )
 
             # 5. LOAD SILVER (cleaned)
             silver_result = self.loader.load_silver(clean_df, dataset_name)
             self.silver_dfs[dataset_name] = clean_df
-            audit.log_event("load_silver", dataset_name, silver_result.records_in, silver_result.records_out, silver_result.records_rejected, "SUCCESS" if silver_result.success else "FAIL", silver_result.duration_seconds)
+            audit.log_event(
+                "load_silver",
+                dataset_name,
+                silver_result.records_in,
+                silver_result.records_out,
+                silver_result.records_rejected,
+                "SUCCESS" if silver_result.success else "FAIL",
+                silver_result.duration_seconds,
+            )
 
             # 6. TRANSFORM
             gold_df, result = self._transform(clean_df, dataset_name)
-            audit.log_event("transform", dataset_name, result.records_in, result.records_out, result.records_rejected, "SUCCESS" if result.success else "WARN", result.duration_seconds)
+            audit.log_event(
+                "transform",
+                dataset_name,
+                result.records_in,
+                result.records_out,
+                result.records_rejected,
+                "SUCCESS" if result.success else "WARN",
+                result.duration_seconds,
+            )
 
             # 7. LOAD GOLD (enriched)
             gold_result = self.loader.load_gold(gold_df, dataset_name)
             self.gold_dfs[dataset_name] = gold_df
-            audit.log_event("load_gold", dataset_name, gold_result.records_in, gold_result.records_out, gold_result.records_rejected, "SUCCESS" if gold_result.success else "FAIL", gold_result.duration_seconds)
+            audit.log_event(
+                "load_gold",
+                dataset_name,
+                gold_result.records_in,
+                gold_result.records_out,
+                gold_result.records_rejected,
+                "SUCCESS" if gold_result.success else "FAIL",
+                gold_result.duration_seconds,
+            )
 
             log.info(
                 f"    Raw:{len(df):>8,}  Bronze:{len(valid_df):>8,}  "
@@ -308,16 +416,21 @@ class ETLPipeline:
         log.info("\n── Data Quality Report ─────────────────────────────────")
         try:
             self.dq_checks = self.dq_checker.run_all_checks(
-                {"bronze": self.bronze_dfs, "silver": self.silver_dfs, "gold": self.gold_dfs},
+                {
+                    "bronze": self.bronze_dfs,
+                    "silver": self.silver_dfs,
+                    "gold": self.gold_dfs,
+                },
                 self.raw_dfs,
             )
             report = self.dq_checker.generate_report(
-                self.dq_checks,
-                self.config.reports_dir / "dq_report.json"
+                self.dq_checks, self.config.reports_dir / "dq_report.json"
             )
-            log.info(f"  DQ Score: {report.get('overall_score', 0):.1f}%  "
-                     f"({report.get('passed', 0)} passed / "
-                     f"{report.get('total_checks', 0)} total checks)")
+            log.info(
+                f"  DQ Score: {report.get('overall_score', 0):.1f}%  "
+                f"({report.get('passed', 0)} passed / "
+                f"{report.get('total_checks', 0)} total checks)"
+            )
         except Exception as exc:
             log.warning(f"  Quality report failed: {exc}")
             report = {}
@@ -346,10 +459,18 @@ class ETLPipeline:
         log.info("╠══════════════════════════════════════════════════════╣")
         log.info(f"║  Datasets processed : {summary['datasets_processed']:<30}║")
         log.info(f"║  Datasets failed    : {summary['datasets_failed']:<30}║")
-        log.info(f"║  Raw rows           : {summary['total_raw_rows']:>15,}               ║")
-        log.info(f"║  Bronze rows        : {summary['total_bronze_rows']:>15,}               ║")
-        log.info(f"║  Silver rows        : {summary['total_silver_rows']:>15,}               ║")
-        log.info(f"║  Gold rows          : {summary['total_gold_rows']:>15,}               ║")
+        log.info(
+            f"║  Raw rows           : {summary['total_raw_rows']:>15,}               ║"
+        )
+        log.info(
+            f"║  Bronze rows        : {summary['total_bronze_rows']:>15,}               ║"
+        )
+        log.info(
+            f"║  Silver rows        : {summary['total_silver_rows']:>15,}               ║"
+        )
+        log.info(
+            f"║  Gold rows          : {summary['total_gold_rows']:>15,}               ║"
+        )
         log.info(f"║  Duration           : {elapsed:<.1f}s{'':<28}║")
         dq = summary.get("dq_report", {})
         log.info(f"║  DQ Score           : {dq.get('overall_score', 'N/A')!s:<30}║")

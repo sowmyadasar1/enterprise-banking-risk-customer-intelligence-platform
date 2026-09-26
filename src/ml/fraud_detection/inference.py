@@ -1,4 +1,5 @@
 """Inference pipeline for production use."""
+
 import joblib
 import pandas as pd
 import numpy as np
@@ -9,9 +10,9 @@ from . import config
 class FraudInferencePipeline:
     """Production inference pipeline for fraud detection."""
 
-    def __init__(self, model_name='xgboost'):
-        model_path = os.path.join(config.MODELS_DIR, f'{model_name}.joblib')
-        feats_path = os.path.join(config.MODELS_DIR, 'selected_features.joblib')
+    def __init__(self, model_name="xgboost"):
+        model_path = os.path.join(config.MODELS_DIR, f"{model_name}.joblib")
+        feats_path = os.path.join(config.MODELS_DIR, "selected_features.joblib")
         if not os.path.exists(model_path):
             raise FileNotFoundError(f"Model not found: {model_path}")
         self.model = joblib.load(model_path)
@@ -56,24 +57,26 @@ class FraudInferencePipeline:
         for i in range(len(X)):
             score = scores[i]
             if score < 10:
-                band, action = 'Low Risk', 'Approve Transaction'
+                band, action = "Low Risk", "Approve Transaction"
             elif score < 25:
-                band, action = 'Low Risk', 'Approve with Monitoring'
+                band, action = "Low Risk", "Approve with Monitoring"
             elif score < 50:
-                band, action = 'Medium Risk', 'Manual Investigation'
+                band, action = "Medium Risk", "Manual Investigation"
             elif score < 75:
-                band, action = 'High Risk', 'Temporary Hold'
+                band, action = "High Risk", "Temporary Hold"
             elif score < 90:
-                band, action = 'Critical Risk', 'Block Transaction'
+                band, action = "Critical Risk", "Block Transaction"
             else:
-                band, action = 'Critical Risk', 'Escalate to Fraud Team'
+                band, action = "Critical Risk", "Escalate to Fraud Team"
 
-            results.append({
-                'fraud_prediction': preds[i],
-                'fraud_probability': probas[i],
-                'risk_score': score,
-                'risk_band': band,
-                'recommended_action': action,
-            })
+            results.append(
+                {
+                    "fraud_prediction": preds[i],
+                    "fraud_probability": probas[i],
+                    "risk_score": score,
+                    "risk_band": band,
+                    "recommended_action": action,
+                }
+            )
 
         return pd.DataFrame(results)

@@ -8,6 +8,7 @@ Usage:
     python run_etl.py --quality-report         # Print DQ report from last run
     python run_etl.py --validate-only          # Extract + validate, no write
 """
+
 import argparse
 import sys
 import time
@@ -22,16 +23,20 @@ def main():
         description="Enterprise Banking Risk & Customer Intelligence Platform — ETL Runner"
     )
     parser.add_argument(
-        "--datasets", nargs="*", default=None,
-        help="Specific dataset names to process. If omitted, all 29 are processed."
+        "--datasets",
+        nargs="*",
+        default=None,
+        help="Specific dataset names to process. If omitted, all 29 are processed.",
     )
     parser.add_argument(
-        "--validate-only", action="store_true",
-        help="Only extract and validate — do not write Bronze/Silver/Gold."
+        "--validate-only",
+        action="store_true",
+        help="Only extract and validate — do not write Bronze/Silver/Gold.",
     )
     parser.add_argument(
-        "--quality-report", action="store_true",
-        help="Generate a data quality report from existing Gold data."
+        "--quality-report",
+        action="store_true",
+        help="Generate a data quality report from existing Gold data.",
     )
     args = parser.parse_args()
 
@@ -45,6 +50,7 @@ def main():
         # Extract + validate only
         from src.etl.extract import DataExtractor
         from src.etl.validate import DatasetValidator
+
         extractor = DataExtractor(CONFIG)
         validator = DatasetValidator()
         all_raw = extractor.extract_all()
@@ -58,19 +64,21 @@ def main():
                 errors += 1
             else:
                 print(f"  ✓ {name}: {len(df):,} rows validated")
-        print(f"\nValidation complete. {len(all_raw)-errors}/{len(all_raw)} datasets passed.")
+        print(
+            f"\nValidation complete. {len(all_raw)-errors}/{len(all_raw)} datasets passed."
+        )
         sys.exit(0 if errors == 0 else 1)
 
     # Full pipeline
     t0 = time.time()
-    print("\n" + "═"*60)
+    print("\n" + "═" * 60)
     print("  Enterprise Banking ETL Pipeline")
-    print("═"*60)
+    print("═" * 60)
     if args.datasets:
         print(f"  Mode: Selective — {args.datasets}")
     else:
         print("  Mode: Full — 29 datasets")
-    print("═"*60 + "\n")
+    print("═" * 60 + "\n")
 
     summary = pipeline.run(datasets=args.datasets)
 
@@ -78,7 +86,9 @@ def main():
     print(f"\nTotal wall-clock time: {elapsed:.1f}s")
 
     if summary.get("datasets_failed", 0) > 0:
-        print(f"\n⚠  {summary['datasets_failed']} datasets failed. Check logs for details.")
+        print(
+            f"\n⚠  {summary['datasets_failed']} datasets failed. Check logs for details."
+        )
         sys.exit(1)
 
     print("\n✅ ETL Pipeline completed successfully.")

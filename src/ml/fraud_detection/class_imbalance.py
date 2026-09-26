@@ -1,4 +1,5 @@
 """Class imbalance analysis and handling strategies."""
+
 import numpy as np
 from sklearn.utils.class_weight import compute_class_weight
 from imblearn.over_sampling import SMOTE, RandomOverSampler
@@ -7,9 +8,9 @@ from imblearn.under_sampling import RandomUnderSampler
 
 def analyze_imbalance(y_train):
     """Analyze and report class imbalance."""
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("  STEP 3: CLASS IMBALANCE ANALYSIS")
-    print("="*70)
+    print("=" * 70)
 
     counts = np.bincount(y_train.astype(int))
     total = len(y_train)
@@ -26,13 +27,13 @@ def analyze_imbalance(y_train):
     else:
         print("  Severity: MILD imbalance")
 
-    return {'counts': counts, 'ratio': ratio}
+    return {"counts": counts, "ratio": ratio}
 
 
 def get_class_weights(y_train):
     """Compute balanced class weights."""
     classes = np.unique(y_train)
-    weights = compute_class_weight('balanced', classes=classes, y=y_train)
+    weights = compute_class_weight("balanced", classes=classes, y=y_train)
     weight_dict = dict(zip(classes.astype(int), weights))
     print(f"  Class weights: {weight_dict}")
     return weight_dict

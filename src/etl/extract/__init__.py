@@ -8,11 +8,11 @@ import logging
 from src.etl.base import BaseExtractor, PipelineResult
 from src.etl.config import ETLConfig
 
-
 logger = logging.getLogger(__name__)
 
 
 import warnings
+
 
 class CsvExtractor(BaseExtractor):
     def extract(self, path: Path) -> pd.DataFrame:
@@ -71,35 +71,35 @@ class JsonExtractor(BaseExtractor):
 
 class DataExtractor:
     DATASET_MAPPING = {
-        "regions":               "reference_data",
-        "branches":              "reference_data",
-        "products":              "reference_data",
-        "transaction_types":     "reference_data",
-        "merchant_categories":   "reference_data",
-        "exchange_rates":        "reference_data",
-        "calendar":              "reference_data",
-        "customers":             "customers",
-        "customer_addresses":    "customers",
-        "customer_employment":   "customers",
-        "customer_segments":     "customers",
-        "customer_risk_scores":  "customers",
-        "kyc_information":       "customers",
-        "beneficiaries":         "customers",
-        "accounts":              "finance",
-        "credit_cards":          "finance",
-        "loans":                 "finance",
-        "loan_payments":         "finance",
-        "loan_default_labels":   "risk",
-        "employees":             "operations",
-        "support_tickets":       "operations",
-        "marketing_campaigns":   "marketing",
-        "campaign_responses":    "marketing",
-        "merchants":             "transactions",
-        "transactions":          "transactions",
-        "fraud_cases":           "fraud",
-        "fraud_investigations":  "fraud",
-        "device_information":    "operations",
-        "login_history":         "operations",
+        "regions": "reference_data",
+        "branches": "reference_data",
+        "products": "reference_data",
+        "transaction_types": "reference_data",
+        "merchant_categories": "reference_data",
+        "exchange_rates": "reference_data",
+        "calendar": "reference_data",
+        "customers": "customers",
+        "customer_addresses": "customers",
+        "customer_employment": "customers",
+        "customer_segments": "customers",
+        "customer_risk_scores": "customers",
+        "kyc_information": "customers",
+        "beneficiaries": "customers",
+        "accounts": "finance",
+        "credit_cards": "finance",
+        "loans": "finance",
+        "loan_payments": "finance",
+        "loan_default_labels": "risk",
+        "employees": "operations",
+        "support_tickets": "operations",
+        "marketing_campaigns": "marketing",
+        "campaign_responses": "marketing",
+        "merchants": "transactions",
+        "transactions": "transactions",
+        "fraud_cases": "fraud",
+        "fraud_investigations": "fraud",
+        "device_information": "operations",
+        "login_history": "operations",
     }
 
     def __init__(self, config: ETLConfig):
@@ -109,30 +109,41 @@ class DataExtractor:
         self.parquet_extractor = ParquetExtractor()
         self.json_extractor = JsonExtractor()
 
-    def extract_dataset(self, dataset_name: str, prefer_parquet: bool = True) -> Tuple[pd.DataFrame, PipelineResult]:
+    def extract_dataset(
+        self, dataset_name: str, prefer_parquet: bool = True
+    ) -> Tuple[pd.DataFrame, PipelineResult]:
         folder = self.DATASET_MAPPING.get(dataset_name, "")
         base_path = self.raw_dir / folder / dataset_name
-        
+
         df = None
         result = None
-        
+
         # Extensions to try based on preference
-        extensions = [".parquet", ".csv", ".json", ".jsonl"] if prefer_parquet else [".csv", ".parquet", ".json", ".jsonl"]
-        
+        extensions = (
+            [".parquet", ".csv", ".json", ".jsonl"]
+            if prefer_parquet
+            else [".csv", ".parquet", ".json", ".jsonl"]
+        )
+
         found_file = None
         for ext in extensions:
             file_path = base_path.with_suffix(ext)
             if file_path.exists():
                 found_file = file_path
                 break
-                
+
         if not found_file:
             return pd.DataFrame(), PipelineResult(
-                success=False, records_in=0, records_out=0, records_rejected=0,
-                errors=[f"No file found for dataset: {dataset_name} in {base_path.parent}"],
-                stage="extract"
+                success=False,
+                records_in=0,
+                records_out=0,
+                records_rejected=0,
+                errors=[
+                    f"No file found for dataset: {dataset_name} in {base_path.parent}"
+                ],
+                stage="extract",
             )
-            
+
         try:
             if found_file.suffix == ".csv":
                 df = self.csv_extractor.extract(found_file)
@@ -142,19 +153,30 @@ class DataExtractor:
                 df = self.json_extractor.extract(found_file)
             else:
                 return pd.DataFrame(), PipelineResult(
-                    success=False, records_in=0, records_out=0, records_rejected=0,
-                    errors=[f"Unsupported file format: {found_file.suffix}"], stage="extract"
+                    success=False,
+                    records_in=0,
+                    records_out=0,
+                    records_rejected=0,
+                    errors=[f"Unsupported file format: {found_file.suffix}"],
+                    stage="extract",
                 )
 
             return df, PipelineResult(
-                success=True, records_in=len(df), records_out=len(df),
-                records_rejected=0, stage="extract"
+                success=True,
+                records_in=len(df),
+                records_out=len(df),
+                records_rejected=0,
+                stage="extract",
             )
         except Exception as e:
             logger.error(f"Error extracting {dataset_name}: {str(e)}")
             return pd.DataFrame(), PipelineResult(
-                success=False, records_in=0, records_out=0, records_rejected=0,
-                errors=[f"Error extracting {dataset_name}: {str(e)}"], stage="extract"
+                success=False,
+                records_in=0,
+                records_out=0,
+                records_rejected=0,
+                errors=[f"Error extracting {dataset_name}: {str(e)}"],
+                stage="extract",
             )
 
     def extract_all(self) -> Dict[str, pd.DataFrame]:

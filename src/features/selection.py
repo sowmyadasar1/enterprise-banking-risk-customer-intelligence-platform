@@ -3,11 +3,13 @@ Feature Selection Module
 Implements algorithmic feature selection: Variance Threshold, Correlation Filtering,
 Mutual Information, and generates recommended feature sets per ML task.
 """
+
 import pandas as pd
 import numpy as np
 from sklearn.feature_selection import VarianceThreshold, mutual_info_classif
 import warnings
-warnings.filterwarnings('ignore')
+
+warnings.filterwarnings("ignore")
 
 
 def variance_threshold_selection(df, threshold=0.01):
@@ -20,7 +22,9 @@ def variance_threshold_selection(df, threshold=0.01):
     selector.fit(numeric_df)
     selected = numeric_df.columns[selector.get_support()].tolist()
     dropped = [c for c in numeric_df.columns if c not in selected]
-    print(f"  [Variance] Kept {len(selected)}, dropped {len(dropped)} low-variance features.")
+    print(
+        f"  [Variance] Kept {len(selected)}, dropped {len(dropped)} low-variance features."
+    )
     if dropped:
         print(f"    Dropped: {dropped[:10]}")
     return selected, dropped
@@ -42,7 +46,9 @@ def correlation_filtering(df, threshold=0.95):
 
     kept = [c for c in numeric_df.columns if c not in to_drop]
     dropped = list(to_drop)
-    print(f"  [Correlation] Kept {len(kept)}, dropped {len(dropped)} highly-correlated features.")
+    print(
+        f"  [Correlation] Kept {len(kept)}, dropped {len(dropped)} highly-correlated features."
+    )
     if dropped:
         print(f"    Dropped: {dropped[:10]}")
     return kept, dropped
@@ -87,24 +93,24 @@ def generate_recommended_sets(df):
     # Step 3: MI for Fraud Detection
     print("\n--- Step 3: Mutual Information for Fraud Detection ---")
     fraud_mi = pd.Series(dtype=float)
-    if 'fraud_risk_indicator' in df.columns:
-        fraud_mi = mutual_information_ranking(df, 'fraud_risk_indicator', top_n=15)
+    if "fraud_risk_indicator" in df.columns:
+        fraud_mi = mutual_information_ranking(df, "fraud_risk_indicator", top_n=15)
 
     # Step 4: MI for Loan Default
     print("\n--- Step 4: Mutual Information for Loan Default ---")
     loan_mi = pd.Series(dtype=float)
-    if 'loan_risk_indicator' in df.columns:
-        loan_mi = mutual_information_ranking(df, 'loan_risk_indicator', top_n=15)
+    if "loan_risk_indicator" in df.columns:
+        loan_mi = mutual_information_ranking(df, "loan_risk_indicator", top_n=15)
 
     print("\n" + "=" * 60)
     print("  FEATURE SELECTION COMPLETE")
     print("=" * 60)
 
     return {
-        'variance_kept': var_kept,
-        'variance_dropped': var_dropped,
-        'correlation_kept': corr_kept,
-        'correlation_dropped': corr_dropped,
-        'fraud_mi': fraud_mi,
-        'loan_mi': loan_mi,
+        "variance_kept": var_kept,
+        "variance_dropped": var_dropped,
+        "correlation_kept": corr_kept,
+        "correlation_dropped": corr_dropped,
+        "fraud_mi": fraud_mi,
+        "loan_mi": loan_mi,
     }

@@ -1,6 +1,7 @@
 """
 Forecasting Service — ARIMA model-based forecast generation.
 """
+
 import logging
 import numpy as np
 from ..core.exceptions import ModelNotLoadedError, PredictionError
@@ -17,13 +18,17 @@ def generate_forecast(target: str, horizon: int) -> dict:
     Returns: { target_metric, horizon_days, forecast: [...], cumulative_total }
     """
     if target not in VALID_TARGETS:
-        raise PredictionError("arima", f"Invalid target: {target}. Must be one of {VALID_TARGETS}")
+        raise PredictionError(
+            "arima", f"Invalid target: {target}. Must be one of {VALID_TARGETS}"
+        )
 
     manager = ModelManager()
     model = manager.get_forecast_model(target)
 
     if model is None:
-        raise ModelNotLoadedError(f"arima_{target}", f"ARIMA model for '{target}' not found on disk")
+        raise ModelNotLoadedError(
+            f"arima_{target}", f"ARIMA model for '{target}' not found on disk"
+        )
 
     try:
         forecast_obj = model.get_forecast(steps=horizon)
@@ -39,12 +44,14 @@ def generate_forecast(target: str, horizon: int) -> dict:
 
         forecast_points = []
         for i in range(horizon):
-            forecast_points.append({
-                "day": i + 1,
-                "mean": round(float(mean[i]), 2),
-                "lower_bound": round(float(lower[i]), 2),
-                "upper_bound": round(float(upper[i]), 2),
-            })
+            forecast_points.append(
+                {
+                    "day": i + 1,
+                    "mean": round(float(mean[i]), 2),
+                    "lower_bound": round(float(lower[i]), 2),
+                    "upper_bound": round(float(upper[i]), 2),
+                }
+            )
 
         return {
             "target_metric": target,

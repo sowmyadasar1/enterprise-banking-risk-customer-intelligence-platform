@@ -1,4 +1,5 @@
 """Inference pipeline for production use (Loan Default)."""
+
 import joblib
 import pandas as pd
 import numpy as np
@@ -9,18 +10,18 @@ from . import config
 class LoanInferencePipeline:
     """Production inference pipeline for loan default prediction."""
 
-    def __init__(self, model_name='xgboost'):
-        model_path = os.path.join(config.MODELS_DIR, f'{model_name}.joblib')
-        feats_path = os.path.join(config.MODELS_DIR, 'selected_features.joblib')
+    def __init__(self, model_name="xgboost"):
+        model_path = os.path.join(config.MODELS_DIR, f"{model_name}.joblib")
+        feats_path = os.path.join(config.MODELS_DIR, "selected_features.joblib")
         if not os.path.exists(model_path):
             raise FileNotFoundError(f"Model not found: {model_path}")
         self.model = joblib.load(model_path)
-        
+
         if os.path.exists(feats_path):
             self.selected_features = joblib.load(feats_path)
         else:
             self.selected_features = None
-            
+
         self.model_name = model_name
         self.auto_approve_thresh = 0.2
         self.auto_reject_thresh = 0.8
@@ -57,33 +58,35 @@ class LoanInferencePipeline:
         for i in range(len(X)):
             prob = probas[i]
             score = scores[i]
-            
+
             if score < 10:
-                band = 'Very Low Risk'
+                band = "Very Low Risk"
             elif score < 25:
-                band = 'Low Risk'
+                band = "Low Risk"
             elif score < 50:
-                band = 'Medium Risk'
+                band = "Medium Risk"
             elif score < 80:
-                band = 'High Risk'
+                band = "High Risk"
             else:
-                band = 'Very High Risk'
+                band = "Very High Risk"
 
             if prob < self.auto_approve_thresh:
-                action, tier = 'Approve Loan', 'Auto-Approve'
+                action, tier = "Approve Loan", "Auto-Approve"
             elif prob >= self.auto_reject_thresh:
-                action, tier = 'Reject Loan', 'Auto-Reject'
-            elif prob < (self.auto_approve_thresh + self.auto_reject_thresh)/2:
-                action, tier = 'Approve with Conditions', 'Manual Review'
+                action, tier = "Reject Loan", "Auto-Reject"
+            elif prob < (self.auto_approve_thresh + self.auto_reject_thresh) / 2:
+                action, tier = "Approve with Conditions", "Manual Review"
             else:
-                action, tier = 'Request Additional Documents', 'Manual Review'
+                action, tier = "Request Additional Documents", "Manual Review"
 
-            results.append({
-                'default_probability': prob,
-                'credit_risk_score': score,
-                'risk_category': band,
-                'recommended_action': action,
-                'decision_tier': tier
-            })
+            results.append(
+                {
+                    "default_probability": prob,
+                    "credit_risk_score": score,
+                    "risk_category": band,
+                    "recommended_action": action,
+                    "decision_tier": tier,
+                }
+            )
 
         return pd.DataFrame(results)

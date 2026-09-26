@@ -1,9 +1,9 @@
 # %% [markdown]
 # # Analysis: Loan Default Patterns
-# This notebook covers the exploratory data analysis (EDA) of the bank's loan portfolio, 
+# This notebook covers the exploratory data analysis (EDA) of the bank's loan portfolio,
 # focusing on understanding loan default patterns and key relationships.
-# We will perform bivariate analysis to understand how customer financial capacity (Total Balance) 
-# and Credit Score impact the likelihood of default. We will also test the statistical significance 
+# We will perform bivariate analysis to understand how customer financial capacity (Total Balance)
+# and Credit Score impact the likelihood of default. We will also test the statistical significance
 # of Loan Type against Default Status using a Chi-Square test.
 
 # %%
@@ -15,8 +15,8 @@ import seaborn as sns
 import os
 
 # Create connection
-conn = sqlite3.connect('../../data/warehouse/enterprise_dw.db')
-vis_dir = '../../notebooks/eda/visualizations'
+conn = sqlite3.connect("../../data/warehouse/enterprise_dw.db")
+vis_dir = "../../notebooks/eda/visualizations"
 os.makedirs(vis_dir, exist_ok=True)
 
 # %% [markdown]
@@ -40,9 +40,11 @@ LEFT JOIN vw_customer_overview c_overview ON l.customer_id = c_overview.customer
 """
 df_loans = pd.read_sql_query(query, conn)
 for col in df_loans.columns:
-    if df_loans[col].dtype == 'object':
-        try: df_loans[col] = pd.to_numeric(df_loans[col])
-        except: pass
+    if df_loans[col].dtype == "object":
+        try:
+            df_loans[col] = pd.to_numeric(df_loans[col])
+        except:
+            pass
 df_loans.fillna(0, inplace=True)
 df_loans.head()
 
@@ -52,11 +54,13 @@ df_loans.head()
 
 # %%
 plt.figure(figsize=(10, 6))
-sns.scatterplot(data=df_loans, x='total_balance', y='loan_amount', hue='is_default', alpha=0.6)
-plt.title('Total Balance vs Loan Amount (colored by Default)')
-plt.xlabel('Total Balance (Proxy for Income)')
-plt.ylabel('Loan Amount')
-plt.savefig(f'{vis_dir}/loan_balance_vs_amount.png', bbox_inches='tight')
+sns.scatterplot(
+    data=df_loans, x="total_balance", y="loan_amount", hue="is_default", alpha=0.6
+)
+plt.title("Total Balance vs Loan Amount (colored by Default)")
+plt.xlabel("Total Balance (Proxy for Income)")
+plt.ylabel("Loan Amount")
+plt.savefig(f"{vis_dir}/loan_balance_vs_amount.png", bbox_inches="tight")
 plt.show()
 
 # %% [markdown]
@@ -69,11 +73,11 @@ plt.show()
 
 # %%
 plt.figure(figsize=(10, 6))
-sns.boxplot(data=df_loans, x='is_default', y='credit_score')
-plt.title('Credit Score Distribution by Default Status')
-plt.xlabel('Is Default (1=Yes, 0=No)')
-plt.ylabel('Credit Score')
-plt.savefig(f'{vis_dir}/loan_credit_score_vs_default.png', bbox_inches='tight')
+sns.boxplot(data=df_loans, x="is_default", y="credit_score")
+plt.title("Credit Score Distribution by Default Status")
+plt.xlabel("Is Default (1=Yes, 0=No)")
+plt.ylabel("Credit Score")
+plt.savefig(f"{vis_dir}/loan_credit_score_vs_default.png", bbox_inches="tight")
 plt.show()
 
 # %% [markdown]
@@ -85,7 +89,7 @@ plt.show()
 # We perform a Chi-Square test of independence to determine if there's a statistically significant association between the type of loan and the likelihood of default.
 
 # %%
-contingency_table = pd.crosstab(df_loans['loan_type'], df_loans['is_default'])
+contingency_table = pd.crosstab(df_loans["loan_type"], df_loans["is_default"])
 print("Contingency Table (Loan Type vs Default):")
 print(contingency_table)
 
@@ -97,5 +101,5 @@ print(f"P-value: {p_val:.4e}")
 # **Business Interpretation:**
 # - **Null Hypothesis (H0):** Loan Type and Default Status are independent.
 # - **Alternative Hypothesis (H1):** There is an association between Loan Type and Default Status.
-# 
+#
 # Given the p-value, if it is less than our significance level (e.g., 0.05), we reject the null hypothesis. This implies that certain loan products might carry inherently higher risks, and the business should potentially adjust interest rates or underwriting criteria for those specific loan types.

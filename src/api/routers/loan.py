@@ -1,6 +1,7 @@
 """
 Loan Default Prediction Router
 """
+
 import time
 from datetime import datetime
 from fastapi import APIRouter, Depends
@@ -13,10 +14,16 @@ from ..schemas.responses import (
 from ..services.loan_service import predict_loan_default
 from ..core.security import verify_api_key
 
-router = APIRouter(prefix="/predict", tags=["Loan Default"], dependencies=[Depends(verify_api_key)])
+router = APIRouter(
+    prefix="/predict", tags=["Loan Default"], dependencies=[Depends(verify_api_key)]
+)
 
 
-@router.post("/loan-default", response_model=LoanDefaultResponse, summary="Predict Loan Default Risk")
+@router.post(
+    "/loan-default",
+    response_model=LoanDefaultResponse,
+    summary="Predict Loan Default Risk",
+)
 async def predict_default(request: LoanDefaultRequest):
     """
     Predicts whether a loan application will default using the XGBoost model from Phase 7B.

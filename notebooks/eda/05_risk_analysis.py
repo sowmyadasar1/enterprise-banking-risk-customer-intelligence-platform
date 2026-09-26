@@ -1,7 +1,7 @@
 # %% [markdown]
 # # Analysis: Risk Profiling
 # This notebook covers the exploratory data analysis (EDA) of customer risk profiles.
-# We will analyze the distribution of risk categories and scores, examine correlations 
+# We will analyze the distribution of risk categories and scores, examine correlations
 # between risk and other numerical features, and detect high-risk customer outliers.
 
 # %%
@@ -12,13 +12,13 @@ import seaborn as sns
 import os
 
 # Create connection
-conn = sqlite3.connect('../../data/warehouse/enterprise_dw.db')
-vis_dir = '../../notebooks/eda/visualizations'
+conn = sqlite3.connect("../../data/warehouse/enterprise_dw.db")
+vis_dir = "../../notebooks/eda/visualizations"
 os.makedirs(vis_dir, exist_ok=True)
 
 # %% [markdown]
 # ## Data Loading
-# We will extract customer risk data, incorporating customer tenure and financial balances 
+# We will extract customer risk data, incorporating customer tenure and financial balances
 # to build a comprehensive view of risk drivers.
 
 # %%
@@ -45,19 +45,24 @@ df_risk.head()
 
 # %%
 plt.figure(figsize=(8, 5))
-sns.countplot(data=df_risk, x='risk_category', order=['Low', 'Medium', 'High', 'Critical'], palette='viridis')
-plt.title('Distribution of Customers by Risk Category')
-plt.xlabel('Risk Category')
-plt.ylabel('Number of Customers')
-plt.savefig(f'{vis_dir}/risk_distribution.png', bbox_inches='tight')
+sns.countplot(
+    data=df_risk,
+    x="risk_category",
+    order=["Low", "Medium", "High", "Critical"],
+    palette="viridis",
+)
+plt.title("Distribution of Customers by Risk Category")
+plt.xlabel("Risk Category")
+plt.ylabel("Number of Customers")
+plt.savefig(f"{vis_dir}/risk_distribution.png", bbox_inches="tight")
 plt.show()
 
 plt.figure(figsize=(10, 5))
-sns.histplot(data=df_risk, x='risk_score', bins=30, kde=True, color='purple')
-plt.title('Distribution of Risk Scores')
-plt.xlabel('Risk Score')
-plt.ylabel('Frequency')
-plt.savefig(f'{vis_dir}/risk_score_histogram.png', bbox_inches='tight')
+sns.histplot(data=df_risk, x="risk_score", bins=30, kde=True, color="purple")
+plt.title("Distribution of Risk Scores")
+plt.xlabel("Risk Score")
+plt.ylabel("Frequency")
+plt.savefig(f"{vis_dir}/risk_score_histogram.png", bbox_inches="tight")
 plt.show()
 
 # %% [markdown]
@@ -69,13 +74,19 @@ plt.show()
 # We investigate the linear relationships between the Risk Score and other numerical financial/demographic indicators.
 
 # %%
-num_cols = ['risk_score', 'credit_score', 'tenure_years', 'total_balance', 'total_accounts']
+num_cols = [
+    "risk_score",
+    "credit_score",
+    "tenure_years",
+    "total_balance",
+    "total_accounts",
+]
 corr_matrix = df_risk[num_cols].corr()
 
 plt.figure(figsize=(8, 6))
-sns.heatmap(corr_matrix, annot=True, cmap='coolwarm', fmt=".2f", vmin=-1, vmax=1)
-plt.title('Correlation Matrix of Numerical Features vs Risk Score')
-plt.savefig(f'{vis_dir}/risk_correlation_heatmap.png', bbox_inches='tight')
+sns.heatmap(corr_matrix, annot=True, cmap="coolwarm", fmt=".2f", vmin=-1, vmax=1)
+plt.title("Correlation Matrix of Numerical Features vs Risk Score")
+plt.savefig(f"{vis_dir}/risk_correlation_heatmap.png", bbox_inches="tight")
 plt.show()
 
 # %% [markdown]
@@ -88,18 +99,34 @@ plt.show()
 
 # %%
 plt.figure(figsize=(10, 6))
-sns.scatterplot(data=df_risk, x='credit_score', y='risk_score', hue='risk_category', palette='Set1', alpha=0.7)
+sns.scatterplot(
+    data=df_risk,
+    x="credit_score",
+    y="risk_score",
+    hue="risk_category",
+    palette="Set1",
+    alpha=0.7,
+)
 
 # Highlight potential outliers: High Risk Score but unusually high Credit Score (Model divergence)
-outliers = df_risk[(df_risk['risk_score'] > df_risk['risk_score'].quantile(0.95)) & 
-                   (df_risk['credit_score'] > df_risk['credit_score'].median())]
+outliers = df_risk[
+    (df_risk["risk_score"] > df_risk["risk_score"].quantile(0.95))
+    & (df_risk["credit_score"] > df_risk["credit_score"].median())
+]
 
-plt.scatter(outliers['credit_score'], outliers['risk_score'], color='black', marker='x', s=100, label='Outliers')
-plt.title('Credit Score vs Risk Score (Highlighting Outliers)')
-plt.xlabel('Credit Score')
-plt.ylabel('Risk Score')
+plt.scatter(
+    outliers["credit_score"],
+    outliers["risk_score"],
+    color="black",
+    marker="x",
+    s=100,
+    label="Outliers",
+)
+plt.title("Credit Score vs Risk Score (Highlighting Outliers)")
+plt.xlabel("Credit Score")
+plt.ylabel("Risk Score")
 plt.legend()
-plt.savefig(f'{vis_dir}/risk_outliers_scatter.png', bbox_inches='tight')
+plt.savefig(f"{vis_dir}/risk_outliers_scatter.png", bbox_inches="tight")
 plt.show()
 
 # %% [markdown]

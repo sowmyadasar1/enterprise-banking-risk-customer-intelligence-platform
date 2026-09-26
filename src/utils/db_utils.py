@@ -10,6 +10,7 @@ from config.database import get_database_uri, ENGINE_CONFIG
 engine = create_engine(get_database_uri(), **ENGINE_CONFIG)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
+
 @contextmanager
 def get_db_session() -> Generator[Session, None, None]:
     """Provide a transactional scope around a series of operations."""
@@ -22,6 +23,7 @@ def get_db_session() -> Generator[Session, None, None]:
         raise
     finally:
         session.close()
+
 
 def execute_query(query: str, params: dict = None) -> pd.DataFrame:
     """Executes a raw SQL query and returns the results as a pandas DataFrame."""

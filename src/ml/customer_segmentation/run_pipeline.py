@@ -1,4 +1,5 @@
 """Master orchestration script for Customer Segmentation & Intelligence Platform."""
+
 from . import config
 from .data_preparation import load_and_validate, prepare_features
 from .customer_analytics import compute_customer_analytics
@@ -12,9 +13,9 @@ from .tests import run_tests
 
 
 def run_full_pipeline():
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("  ENTERPRISE CUSTOMER SEGMENTATION & INTELLIGENCE PLATFORM")
-    print("="*70)
+    print("=" * 70)
 
     # 1. Data Preparation
     df = load_and_validate()
@@ -36,12 +37,12 @@ def run_full_pipeline():
     all_recs = generate_recommendations(persona_profiles)
 
     # 7. Segment Profiling (embedded in Personas + Reporting)
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("  STEP 7: SEGMENT PROFILING")
-    print("="*70)
+    print("=" * 70)
     for persona, profile in persona_profiles.items():
-        cnt = profile.get('customer_count', 0)
-        metrics = profile.get('avg_metrics', {})
+        cnt = profile.get("customer_count", 0)
+        metrics = profile.get("avg_metrics", {})
         print(f"\n  {persona} ({cnt} customers):")
         for m, v in metrics.items():
             print(f"    {m}: {v:,.2f}")
@@ -50,16 +51,17 @@ def run_full_pipeline():
     generate_all_visualizations(profile_df, analytics_df, assigned)
 
     # 9. Reports
-    generate_reports(analytics_df, profile_df, assigned, persona_profiles,
-                     comparison_df, all_recs)
+    generate_reports(
+        analytics_df, profile_df, assigned, persona_profiles, comparison_df, all_recs
+    )
 
     # 10. Tests
     print("\n")
     run_tests()
 
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("  CUSTOMER SEGMENTATION PLATFORM — PIPELINE COMPLETE")
-    print("="*70)
+    print("=" * 70)
 
 
 if __name__ == "__main__":

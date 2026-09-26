@@ -1,6 +1,7 @@
 """
 Loan Default Prediction Service — Business logic decoupled from API routes.
 """
+
 import logging
 import numpy as np
 import pandas as pd
@@ -36,7 +37,9 @@ def predict_loan_default(features: dict) -> dict:
     selected_features = manager.get_loan_features()
 
     if model is None:
-        raise ModelNotLoadedError("loan_xgboost", "XGBoost loan model not found on disk")
+        raise ModelNotLoadedError(
+            "loan_xgboost", "XGBoost loan model not found on disk"
+        )
 
     try:
         df = pd.DataFrame([features])

@@ -1,21 +1,19 @@
 """Configuration for the Revenue & Transaction Forecasting Platform."""
+
 import os
 
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..'))
-DB_PATH = os.path.join(PROJECT_ROOT, 'data', 'warehouse', 'enterprise_dw.db')
+PROJECT_ROOT = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "..", "..")
+)
+DB_PATH = os.path.join(PROJECT_ROOT, "data", "warehouse", "enterprise_dw.db")
 MODULE_DIR = os.path.dirname(__file__)
-MODELS_DIR = os.path.join(MODULE_DIR, 'models')
-REPORTS_DIR = os.path.join(MODULE_DIR, 'reports')
-VIS_DIR = os.path.join(MODULE_DIR, 'visualizations')
-DATA_DIR = os.path.join(MODULE_DIR, 'data')
+MODELS_DIR = os.path.join(MODULE_DIR, "models")
+REPORTS_DIR = os.path.join(MODULE_DIR, "reports")
+VIS_DIR = os.path.join(MODULE_DIR, "visualizations")
+DATA_DIR = os.path.join(MODULE_DIR, "data")
 
 # Target series available for forecasting
-TARGETS = [
-    'transaction_volume',
-    'revenue',
-    'loan_demand',
-    'new_customers'
-]
+TARGETS = ["transaction_volume", "revenue", "loan_demand", "new_customers"]
 
 # Forecasting Horizons (days)
 HORIZONS = [30, 90, 180, 365]

@@ -1,6 +1,7 @@
 """
 Fraud Detection Service — Business logic decoupled from API routes.
 """
+
 import logging
 import numpy as np
 import pandas as pd
@@ -31,7 +32,9 @@ def predict_fraud(features: dict) -> dict:
     selected_features = manager.get_fraud_features()
 
     if model is None:
-        raise ModelNotLoadedError("fraud_xgboost", "XGBoost fraud model not found on disk")
+        raise ModelNotLoadedError(
+            "fraud_xgboost", "XGBoost fraud model not found on disk"
+        )
 
     try:
         # Build a DataFrame from the request — only the features the model expects

@@ -1,15 +1,19 @@
 """Python script to validate Power BI DAX KPI logic against the Data Warehouse."""
+
 import os
 import sqlite3
 import pandas as pd
 
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..', '..'))
-DB_PATH = os.path.join(PROJECT_ROOT, 'data', 'warehouse', 'enterprise_dw.db')
+PROJECT_ROOT = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), "..", "..", "..", "..")
+)
+DB_PATH = os.path.join(PROJECT_ROOT, "data", "warehouse", "enterprise_dw.db")
+
 
 def validate_kpis():
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("  POWER BI KPI VALIDATION SUITE")
-    print("="*70)
+    print("=" * 70)
 
     if not os.path.exists(DB_PATH):
         print(f"[ERROR] Database not found at {DB_PATH}")
@@ -56,9 +60,10 @@ def validate_kpis():
         print(f"  [DAX: Average Risk Score] SQL Match: N/A")
 
     print("\n  Validation Complete. Data Model Parity: 100%")
-    print("="*70)
-    
+    print("=" * 70)
+
     conn.close()
+
 
 if __name__ == "__main__":
     validate_kpis()

@@ -2,10 +2,10 @@
 Enterprise FastAPI Configuration
 Centralized settings management using Pydantic BaseSettings.
 """
+
 import os
 from pathlib import Path
 from functools import lru_cache
-
 
 # Project root detection
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
@@ -15,7 +15,14 @@ FRAUD_MODEL_DIR = PROJECT_ROOT / "src" / "ml" / "fraud_detection" / "models"
 LOAN_MODEL_DIR = PROJECT_ROOT / "src" / "ml" / "loan_default" / "models"
 SEGMENT_MODEL_DIR = PROJECT_ROOT / "src" / "ml" / "customer_segmentation" / "models"
 FORECAST_MODEL_DIR = PROJECT_ROOT / "src" / "ml" / "forecasting" / "models"
-PERSONA_PATH = PROJECT_ROOT / "src" / "ml" / "customer_segmentation" / "personas" / "persona_profiles.json"
+PERSONA_PATH = (
+    PROJECT_ROOT
+    / "src"
+    / "ml"
+    / "customer_segmentation"
+    / "personas"
+    / "persona_profiles.json"
+)
 DW_PATH = PROJECT_ROOT / "data" / "warehouse" / "enterprise_dw.db"
 
 # API metadata

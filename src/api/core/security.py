@@ -1,6 +1,7 @@
 """
 API Security — API Key authentication dependency.
 """
+
 import logging
 from fastapi import Security, HTTPException, status
 from fastapi.security import APIKeyHeader

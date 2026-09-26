@@ -1,4 +1,5 @@
 """Test suite for Customer Segmentation Platform."""
+
 import os
 import json
 import joblib
@@ -7,14 +8,15 @@ import numpy as np
 from sklearn.cluster import KMeans
 from . import config
 import warnings
-warnings.filterwarnings('ignore')
+
+warnings.filterwarnings("ignore")
 
 
 def run_tests():
     """Execute all tests."""
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("  CUSTOMER SEGMENTATION — TEST SUITE")
-    print("="*70)
+    print("=" * 70)
 
     passed = 0
     failed = 0
@@ -37,7 +39,7 @@ def run_tests():
 
     # 2. Clustering model saved
     try:
-        model_path = os.path.join(config.MODELS_DIR, 'kmeans_model.joblib')
+        model_path = os.path.join(config.MODELS_DIR, "kmeans_model.joblib")
         model = joblib.load(model_path)
         assert_true(isinstance(model, KMeans), "Clustering model saved and loadable")
     except Exception as e:
@@ -45,8 +47,8 @@ def run_tests():
 
     # 3. Cluster reproducibility
     try:
-        scaler = joblib.load(os.path.join(config.MODELS_DIR, 'scaler.joblib'))
-        pt = joblib.load(os.path.join(config.MODELS_DIR, 'power_transformer.joblib'))
+        scaler = joblib.load(os.path.join(config.MODELS_DIR, "scaler.joblib"))
+        pt = joblib.load(os.path.join(config.MODELS_DIR, "power_transformer.joblib"))
         drop = [c for c in config.DROP_COLS if c in df.columns]
         X = df.drop(columns=drop).select_dtypes(include=[np.number]).fillna(0)
         X_t = pt.transform(X)
@@ -59,7 +61,7 @@ def run_tests():
 
     # 4. Persona profiles generated
     try:
-        with open(os.path.join(config.PERSONAS_DIR, 'persona_profiles.json')) as f:
+        with open(os.path.join(config.PERSONAS_DIR, "persona_profiles.json")) as f:
             profiles = json.load(f)
         assert_true(len(profiles) >= 3, "Persona profiles generated")
     except Exception as e:
@@ -67,7 +69,7 @@ def run_tests():
 
     # 5. Recommendations generated
     try:
-        with open(os.path.join(config.RECS_DIR, 'recommendations.json')) as f:
+        with open(os.path.join(config.RECS_DIR, "recommendations.json")) as f:
             recs = json.load(f)
         assert_true(len(recs) >= 3, "Recommendation engine validated")
     except Exception as e:
@@ -75,7 +77,7 @@ def run_tests():
 
     # 6. Customer-persona mapping
     try:
-        mapping = pd.read_csv(os.path.join(config.DATA_DIR, 'customer_personas.csv'))
+        mapping = pd.read_csv(os.path.join(config.DATA_DIR, "customer_personas.csv"))
         assert_true(len(mapping) == len(df), "Customer-persona mapping complete")
     except Exception as e:
         assert_true(False, "Customer-persona mapping", str(e))

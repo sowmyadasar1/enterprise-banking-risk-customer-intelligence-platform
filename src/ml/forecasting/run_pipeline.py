@@ -1,4 +1,5 @@
 """Master orchestrator for the Forecasting Platform."""
+
 from .data_preparation import extract_daily_series
 from .time_series_analysis import run_analysis
 from .feature_engineering import engineer_features
@@ -10,10 +11,11 @@ from .visualizations import generate_all_visualizations
 from .reporting import generate_reports
 from .tests import run_tests
 
+
 def run_full_pipeline():
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("  ENTERPRISE REVENUE & TRANSACTION FORECASTING PLATFORM")
-    print("="*70)
+    print("=" * 70)
 
     # 1. Data Preparation
     df = extract_daily_series()
@@ -45,9 +47,10 @@ def run_full_pipeline():
     # 10. Tests
     run_tests()
 
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("  FORECASTING PLATFORM — PIPELINE COMPLETE")
-    print("="*70)
+    print("=" * 70)
+
 
 if __name__ == "__main__":
     run_full_pipeline()

@@ -1,4 +1,5 @@
 """Data preparation for time series forecasting."""
+
 import os
 import sqlite3
 import pandas as pd
@@ -7,9 +8,9 @@ from . import config
 
 def extract_daily_series():
     """Extract daily aggregated metrics from the Data Warehouse."""
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("  STEP 1: DATA PREPARATION (TIME SERIES AGGREGATION)")
-    print("="*70)
+    print("=" * 70)
 
     if not os.path.exists(config.DB_PATH):
         raise FileNotFoundError(f"Database not found at {config.DB_PATH}")
@@ -26,9 +27,9 @@ def extract_daily_series():
         GROUP BY transaction_date
         ORDER BY transaction_date
     """
-    df_txn = pd.read_sql(query_txn, conn, parse_dates=['date'])
-    df_txn['date'] = pd.to_datetime(df_txn['date'], utc=True).dt.tz_localize(None)
-    df_txn = df_txn.set_index('date')
+    df_txn = pd.read_sql(query_txn, conn, parse_dates=["date"])
+    df_txn["date"] = pd.to_datetime(df_txn["date"], utc=True).dt.tz_localize(None)
+    df_txn = df_txn.set_index("date")
 
     # 2. Loan Demand
     query_loan = """
@@ -39,9 +40,9 @@ def extract_daily_series():
         GROUP BY start_date
         ORDER BY start_date
     """
-    df_loan = pd.read_sql(query_loan, conn, parse_dates=['date'])
-    df_loan['date'] = pd.to_datetime(df_loan['date'], utc=True).dt.tz_localize(None)
-    df_loan = df_loan.set_index('date')
+    df_loan = pd.read_sql(query_loan, conn, parse_dates=["date"])
+    df_loan["date"] = pd.to_datetime(df_loan["date"], utc=True).dt.tz_localize(None)
+    df_loan = df_loan.set_index("date")
 
     # 3. New Customers
     query_cust = """
@@ -52,22 +53,24 @@ def extract_daily_series():
         GROUP BY join_date
         ORDER BY join_date
     """
-    df_cust = pd.read_sql(query_cust, conn, parse_dates=['date'])
-    df_cust['date'] = pd.to_datetime(df_cust['date'], utc=True).dt.tz_localize(None)
-    df_cust = df_cust.set_index('date')
+    df_cust = pd.read_sql(query_cust, conn, parse_dates=["date"])
+    df_cust["date"] = pd.to_datetime(df_cust["date"], utc=True).dt.tz_localize(None)
+    df_cust = df_cust.set_index("date")
 
     conn.close()
 
     # Combine all series
-    df = df_txn.join(df_loan, how='outer').join(df_cust, how='outer')
-    
+    df = df_txn.join(df_loan, how="outer").join(df_cust, how="outer")
+
     # Resample to ensure continuous daily frequency
-    df = df.resample('D').sum().fillna(0)
+    df = df.resample("D").sum().fillna(0)
 
     print(f"  Loaded Time Series:")
-    print(f"    Date Range: {df.index.min().strftime('%Y-%m-%d')} to {df.index.max().strftime('%Y-%m-%d')}")
+    print(
+        f"    Date Range: {df.index.min().strftime('%Y-%m-%d')} to {df.index.max().strftime('%Y-%m-%d')}"
+    )
     print(f"    Total Days: {len(df)}")
-    
+
     # Validate
     missing = df.isnull().sum().sum()
     if missing > 0:
@@ -85,7 +88,7 @@ def extract_daily_series():
             df[col] = df[col].clip(upper=upper_limit)
 
     # Save prepared dataset
-    output_path = os.path.join(config.DATA_DIR, 'daily_time_series.csv')
+    output_path = os.path.join(config.DATA_DIR, "daily_time_series.csv")
     df.to_csv(output_path)
     print(f"  Saved aggregated series to {output_path}")
 

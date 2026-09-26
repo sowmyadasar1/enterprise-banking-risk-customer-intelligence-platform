@@ -1,6 +1,7 @@
 """
 Revenue & Transaction Forecasting Router
 """
+
 import time
 from datetime import datetime
 from fastapi import APIRouter, Depends, Query
@@ -12,7 +13,9 @@ from ..schemas.responses import (
 from ..services.forecast_service import generate_forecast
 from ..core.security import verify_api_key
 
-router = APIRouter(prefix="/forecast", tags=["Forecasting"], dependencies=[Depends(verify_api_key)])
+router = APIRouter(
+    prefix="/forecast", tags=["Forecasting"], dependencies=[Depends(verify_api_key)]
+)
 
 
 @router.get(

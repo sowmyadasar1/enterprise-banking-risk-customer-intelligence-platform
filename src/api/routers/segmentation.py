@@ -1,6 +1,7 @@
 """
 Customer Segmentation Router
 """
+
 import time
 from datetime import datetime
 from fastapi import APIRouter, Depends
@@ -13,10 +14,18 @@ from ..schemas.responses import (
 from ..services.segment_service import predict_segment
 from ..core.security import verify_api_key
 
-router = APIRouter(prefix="/predict", tags=["Customer Segmentation"], dependencies=[Depends(verify_api_key)])
+router = APIRouter(
+    prefix="/predict",
+    tags=["Customer Segmentation"],
+    dependencies=[Depends(verify_api_key)],
+)
 
 
-@router.post("/segmentation", response_model=SegmentationResponse, summary="Assign Customer Segment")
+@router.post(
+    "/segmentation",
+    response_model=SegmentationResponse,
+    summary="Assign Customer Segment",
+)
 async def assign_segment(request: SegmentationRequest):
     """
     Assigns a customer to a behavioral segment using the K-Means model from Phase 7C.

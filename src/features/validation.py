@@ -2,6 +2,7 @@
 Feature Validation Module
 Validates feature quality: missing values, constant features, duplicates, distributions.
 """
+
 import pandas as pd
 import numpy as np
 
@@ -11,7 +12,9 @@ def validate_missing_values(df, threshold=0.3):
     missing = df.isnull().mean().round(4)
     flagged = missing[missing > threshold]
     if len(flagged) > 0:
-        print(f"  [WARN] {len(flagged)} features exceed {threshold*100}% missing threshold:")
+        print(
+            f"  [WARN] {len(flagged)} features exceed {threshold*100}% missing threshold:"
+        )
         for col, pct in flagged.items():
             print(f"    - {col}: {pct*100:.1f}%")
     else:
@@ -77,9 +80,11 @@ def validate_distributions(df):
     """Print basic distribution statistics for numeric features."""
     numeric_df = df.select_dtypes(include=[np.number])
     stats = numeric_df.describe().T
-    stats['skew'] = numeric_df.skew()
-    stats['kurtosis'] = numeric_df.kurtosis()
-    print(f"  [INFO] Distribution summary for {len(numeric_df.columns)} numeric features generated.")
+    stats["skew"] = numeric_df.skew()
+    stats["kurtosis"] = numeric_df.kurtosis()
+    print(
+        f"  [INFO] Distribution summary for {len(numeric_df.columns)} numeric features generated."
+    )
     return stats
 
 
@@ -92,19 +97,19 @@ def run_full_validation(df, name="Feature Set"):
 
     results = {}
     print("\n1. Missing Values Check:")
-    results['missing'] = validate_missing_values(df)
+    results["missing"] = validate_missing_values(df)
 
     print("\n2. Constant Features Check:")
-    results['constants'] = validate_constant_features(df)
+    results["constants"] = validate_constant_features(df)
 
     print("\n3. Duplicate Features Check:")
-    results['duplicates'] = validate_duplicate_features(df)
+    results["duplicates"] = validate_duplicate_features(df)
 
     print("\n4. Highly Correlated Features Check:")
-    results['high_corr'] = validate_highly_correlated(df)
+    results["high_corr"] = validate_highly_correlated(df)
 
     print("\n5. Distribution Statistics:")
-    results['distributions'] = validate_distributions(df)
+    results["distributions"] = validate_distributions(df)
 
     print(f"\n{'='*60}")
     print(f"  VALIDATION COMPLETE: {name}")

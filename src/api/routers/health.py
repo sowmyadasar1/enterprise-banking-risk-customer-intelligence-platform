@@ -1,6 +1,7 @@
 """
 Health & System Information Router
 """
+
 from datetime import datetime
 from fastapi import APIRouter
 from ..schemas.responses import HealthResponse, ModelInfoResponse
@@ -49,7 +50,11 @@ async def list_models():
         models.append(
             ModelInfoResponse(
                 model_name=name,
-                model_type="XGBoost" if name in ("fraud", "loan_default") else "K-Means" if name == "segmentation" else "ARIMA",
+                model_type=(
+                    "XGBoost"
+                    if name in ("fraud", "loan_default")
+                    else "K-Means" if name == "segmentation" else "ARIMA"
+                ),
                 is_loaded=loaded,
                 artifact_path=f"src/ml/{name}/models/",
             )

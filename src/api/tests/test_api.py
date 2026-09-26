@@ -2,6 +2,7 @@
 Automated Test Suite for the Enterprise Banking FastAPI Platform.
 Uses FastAPI TestClient (no live server needed).
 """
+
 import pytest
 from fastapi.testclient import TestClient
 from ..main import app
@@ -129,12 +130,18 @@ class TestPredictions:
             "number_of_accounts": 5,
             "previous_defaults": 0,
         }
-        resp = client.post(f"{API_PREFIX}/predict/loan-default", json=payload, headers=HEADERS)
+        resp = client.post(
+            f"{API_PREFIX}/predict/loan-default", json=payload, headers=HEADERS
+        )
         assert resp.status_code == 200
         data = resp.json()
         assert "prediction" in data
         assert data["prediction"]["risk_band"] in ["Low", "Medium", "High"]
-        assert data["prediction"]["recommended_action"] in ["Approve", "Review", "Decline"]
+        assert data["prediction"]["recommended_action"] in [
+            "Approve",
+            "Review",
+            "Decline",
+        ]
 
     def test_segmentation_prediction(self):
         payload = {
@@ -145,7 +152,9 @@ class TestPredictions:
             "num_products": 4,
             "credit_score": 760,
         }
-        resp = client.post(f"{API_PREFIX}/predict/segmentation", json=payload, headers=HEADERS)
+        resp = client.post(
+            f"{API_PREFIX}/predict/segmentation", json=payload, headers=HEADERS
+        )
         assert resp.status_code == 200
         data = resp.json()
         assert "prediction" in data

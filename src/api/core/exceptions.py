@@ -2,6 +2,7 @@
 Global Exception Handlers & Custom Exceptions
 Provides consistent JSON error responses across all endpoints.
 """
+
 import logging
 import traceback
 from fastapi import FastAPI, Request
@@ -14,6 +15,7 @@ logger = logging.getLogger("api.exceptions")
 # ─── Custom Exceptions ──────────────────────────────────────────────
 class ModelNotLoadedError(Exception):
     """Raised when an ML model fails to load from disk."""
+
     def __init__(self, model_name: str, detail: str = ""):
         self.model_name = model_name
         self.detail = detail
@@ -22,6 +24,7 @@ class ModelNotLoadedError(Exception):
 
 class PredictionError(Exception):
     """Raised when a prediction pipeline fails internally."""
+
     def __init__(self, model_name: str, detail: str = ""):
         self.model_name = model_name
         self.detail = detail
@@ -30,6 +33,7 @@ class PredictionError(Exception):
 
 class InvalidInputError(Exception):
     """Raised when business-rule input validation fails."""
+
     def __init__(self, detail: str = ""):
         self.detail = detail
         super().__init__(detail)
@@ -40,7 +44,9 @@ def register_exception_handlers(app: FastAPI):
     """Attach all custom exception handlers to the FastAPI application."""
 
     @app.exception_handler(RequestValidationError)
-    async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    async def validation_exception_handler(
+        request: Request, exc: RequestValidationError
+    ):
         logger.warning("Validation error on %s: %s", request.url.path, exc.errors())
         return JSONResponse(
             status_code=422,

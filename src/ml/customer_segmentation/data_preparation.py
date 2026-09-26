@@ -1,4 +1,5 @@
 """Data preparation: load Feature Store, scale, handle outliers."""
+
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler, PowerTransformer
@@ -9,9 +10,9 @@ from . import config
 
 def load_and_validate():
     """Load feature store and perform validation."""
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("  STEP 1: DATA PREPARATION")
-    print("="*70)
+    print("=" * 70)
 
     df = pd.read_parquet(config.FEATURE_STORE)
     print(f"  Loaded: {df.shape[0]} rows × {df.shape[1]} columns")
@@ -37,17 +38,19 @@ def prepare_features(df):
 
     # Power Transform to stabilize highly skewed financial distributions
     print("  Applying Yeo-Johnson PowerTransform...")
-    pt = PowerTransformer(method='yeo-johnson', standardize=False)
+    pt = PowerTransformer(method="yeo-johnson", standardize=False)
     X_transformed = pd.DataFrame(pt.fit_transform(X), columns=X.columns, index=X.index)
 
     # Standard Scaling
     print("  Applying StandardScaler...")
     scaler = StandardScaler()
-    X_scaled = pd.DataFrame(scaler.fit_transform(X_transformed), columns=X.columns, index=X.index)
+    X_scaled = pd.DataFrame(
+        scaler.fit_transform(X_transformed), columns=X.columns, index=X.index
+    )
 
     # Save scaler and transformer for reproducibility
-    joblib.dump(scaler, os.path.join(config.MODELS_DIR, 'scaler.joblib'))
-    joblib.dump(pt, os.path.join(config.MODELS_DIR, 'power_transformer.joblib'))
+    joblib.dump(scaler, os.path.join(config.MODELS_DIR, "scaler.joblib"))
+    joblib.dump(pt, os.path.join(config.MODELS_DIR, "power_transformer.joblib"))
 
     print(f"  Scaled features shape: {X_scaled.shape}")
     return X_scaled, X, customer_ids

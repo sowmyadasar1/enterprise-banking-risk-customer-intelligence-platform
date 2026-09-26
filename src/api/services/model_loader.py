@@ -2,6 +2,7 @@
 Model Loader — Lazy-loading Singleton registry for all ML model artifacts.
 Models are loaded on first access and cached in memory for subsequent requests.
 """
+
 import json
 import logging
 import joblib
@@ -21,11 +22,12 @@ logger = logging.getLogger("api.model_loader")
 class ModelManager:
     """
     Thread-safe singleton that lazily loads and caches ML artifacts.
-    
+
     Usage:
         manager = ModelManager()
         fraud_model = manager.get_fraud_model()
     """
+
     _instance: Optional["ModelManager"] = None
     _initialized: bool = False
 
@@ -63,6 +65,7 @@ class ModelManager:
             elif loader == "statsmodels":
                 from statsmodels.tsa.arima.model import ARIMAResultsWrapper
                 import pickle
+
                 with open(path, "rb") as f:
                     obj = pickle.load(f)
             elif loader == "json":
@@ -86,7 +89,9 @@ class ModelManager:
         return model
 
     def get_fraud_features(self):
-        return self._load("fraud_features", FRAUD_MODEL_DIR / "selected_features.joblib")
+        return self._load(
+            "fraud_features", FRAUD_MODEL_DIR / "selected_features.joblib"
+        )
 
     # ─── Loan Default ───────────────────────────────────────────────
     def get_loan_model(self):
@@ -109,7 +114,9 @@ class ModelManager:
         return self._load("seg_scaler", SEGMENT_MODEL_DIR / "scaler.joblib")
 
     def get_segmentation_transformer(self):
-        return self._load("seg_transformer", SEGMENT_MODEL_DIR / "power_transformer.joblib")
+        return self._load(
+            "seg_transformer", SEGMENT_MODEL_DIR / "power_transformer.joblib"
+        )
 
     def get_segmentation_pca(self):
         return self._load("seg_pca", SEGMENT_MODEL_DIR / "pca_2d.joblib")

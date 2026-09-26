@@ -1,15 +1,23 @@
 """Report generation: markdown reports for loan default predictions."""
+
 import os
 import pandas as pd
 from . import config
 
 
-def generate_reports(comparison_df, cost_df, threshold_results, shap_results,
-                     risk_df, feature_selection_results, best_model_name):
+def generate_reports(
+    comparison_df,
+    cost_df,
+    threshold_results,
+    shap_results,
+    risk_df,
+    feature_selection_results,
+    best_model_name,
+):
     """Generate comprehensive markdown reports."""
-    print("\n" + "="*70)
+    print("\n" + "=" * 70)
     print("  STEP 11: REPORT GENERATION")
-    print("="*70)
+    print("=" * 70)
 
     # --- Model Comparison Report ---
     report = "# Loan Default Prediction — Model Comparison Report\n\n"
@@ -17,11 +25,13 @@ def generate_reports(comparison_df, cost_df, threshold_results, shap_results,
     report += "| Model | F1 Score | ROC-AUC | PR-AUC | Brier Score (Calibration) |\n"
     report += "|-------|----------|---------|--------|-------------|\n"
     for _, row in comparison_df.iterrows():
-        report += (f"| {row['model']} | {row['f1']:.4f} | {row['roc_auc']:.4f} | "
-                   f"{row['pr_auc']:.4f} | {row['brier_score']:.4f} |\n")
+        report += (
+            f"| {row['model']} | {row['f1']:.4f} | {row['roc_auc']:.4f} | "
+            f"{row['pr_auc']:.4f} | {row['brier_score']:.4f} |\n"
+        )
     report += f"\n**Best Model (by PR-AUC):** {best_model_name}\n"
 
-    with open(os.path.join(config.REPORTS_DIR, 'model_comparison.md'), 'w') as f:
+    with open(os.path.join(config.REPORTS_DIR, "model_comparison.md"), "w") as f:
         f.write(report)
 
     # --- Business Impact Report ---
@@ -34,11 +44,13 @@ def generate_reports(comparison_df, cost_df, threshold_results, shap_results,
     biz += "| Model | Auto-Approve | Manual Review | Auto-Reject | Review Cost | Value Added vs Baseline |\n"
     biz += "|-------|--------------|---------------|-------------|-------------|-------------------------|\n"
     for _, row in cost_df.iterrows():
-        biz += (f"| {row['model']} | {row['auto_approve_rate']*100:.1f}% | "
-                f"{row['review_rate']*100:.1f}% | {row['auto_reject_rate']*100:.1f}% | "
-                f"${row['review_costs']:,.0f} | ${row['value_added_vs_baseline']:,.0f} |\n")
-    
-    with open(os.path.join(config.REPORTS_DIR, 'business_impact.md'), 'w') as f:
+        biz += (
+            f"| {row['model']} | {row['auto_approve_rate']*100:.1f}% | "
+            f"{row['review_rate']*100:.1f}% | {row['auto_reject_rate']*100:.1f}% | "
+            f"${row['review_costs']:,.0f} | ${row['value_added_vs_baseline']:,.0f} |\n"
+        )
+
+    with open(os.path.join(config.REPORTS_DIR, "business_impact.md"), "w") as f:
         f.write(biz)
 
     # --- Threshold & Risk Scoring Guide ---
@@ -48,7 +60,7 @@ def generate_reports(comparison_df, cost_df, threshold_results, shap_results,
         guide += f"- **Auto-Approve Threshold:** < {threshold_results['auto_approve_thresh']:.4f} \n"
         guide += f"- **Auto-Reject Threshold:** >= {threshold_results['auto_reject_thresh']:.4f}\n"
         guide += f"- **Manual Review Range:** {threshold_results['auto_approve_thresh']:.4f} to {threshold_results['auto_reject_thresh']:.4f}\n\n"
-    
+
     guide += "## Credit Risk Categories\n\n"
     guide += "| Risk Score (0-100) | Risk Category | Interpretation |\n"
     guide += "|--------------------|---------------|----------------|\n"
@@ -58,7 +70,7 @@ def generate_reports(comparison_df, cost_df, threshold_results, shap_results,
     guide += "| 50 - 79 | High Risk | High likelihood of default, strict conditions |\n"
     guide += "| 80 - 100 | Very High Risk | Critical default risk, decline |\n"
 
-    with open(os.path.join(config.REPORTS_DIR, 'risk_scoring_guide.md'), 'w') as f:
+    with open(os.path.join(config.REPORTS_DIR, "risk_scoring_guide.md"), "w") as f:
         f.write(guide)
 
     # --- Executive Summary ---
@@ -82,7 +94,7 @@ def generate_reports(comparison_df, cost_df, threshold_results, shap_results,
     ex += "2. Implement multi-tier threshold routing to reduce underwriter workload.\n"
     ex += "3. Use SHAP global importance insights to update credit policies.\n"
 
-    with open(os.path.join(config.REPORTS_DIR, 'executive_summary.md'), 'w') as f:
+    with open(os.path.join(config.REPORTS_DIR, "executive_summary.md"), "w") as f:
         f.write(ex)
 
     print(f"  Saved: 4 Markdown reports")
